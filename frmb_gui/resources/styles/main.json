@@ -1,0 +1,51 @@
+{
+  "layer": {
+    "color": {
+      "background": "rgb(2,2,2)",
+      "low": "rgb(10,10,11)",
+      "low_hi": "rgb(13,13,14)",
+      "intermediate_lo": "rgb(28,28,28)",
+      "intermediate": "rgb(36,36,36)",
+      "intermediate_hi": "rgb(40,40,40)",
+      "tooltip": "rgb(23, 20, 5)"
+    },
+    "border_radius": {
+      "small": "0px",
+      "default": "0px"
+    }
+  },
+  "text": {
+    "color": {
+      "primary": "rgb(170,170,170)",
+      "secondary": "rgb(120,120,120)",
+      "tertiary": "rgb(80,80,80)",
+      "tooltip": "rgb(132, 115, 60)"
+    },
+    "family": {
+      "default": "IBM Plex Sans",
+      "bold": "IBM Plex Sans",
+      "thin": "IBM Plex Sans Thin",
+      "monospace": "JetBrains Mono"
+    },
+    "size": {
+      "small": "8pt",
+      "default": "10pt",
+      "h1": "28pt"
+    },
+    "weight": {
+      "h1": "200"
+    }
+  },
+  "spacing": {
+    "smaller": "5px",
+    "small": "8px",
+    "normal": "15px",
+    "large": "20px",
+    "huge": "30px",
+    "paragraph": "7px"
+  },
+  "icon": {
+    "plus": "plus-light.svg",
+    "minus": "minus-light.svg"
+  }
+}

@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "frmb-gui"
+version = "0.1.0"
+description = "GUI tool to customize the Windows context-menu using the registry."
+authors = ["Liam Collod <monsieurlixm@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "frmb_gui" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.11"
+frmb = { git = "https://github.com/MrLixm/frmb.git", tag = "v1.0.1" }
+PySide6 = "6.6.1"
+PySide6-stubs = "*"
+QtPy = "2.4.*"
+Jinja2 = "3.1.*"
+
+[tool.poetry.dev-dependencies]
+black = "*"
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
