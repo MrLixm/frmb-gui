@@ -26,9 +26,10 @@ class FrmbApplication(QtWidgets.QApplication):
 
     def __init__(self):
         super().__init__()
+        # one of the file defined in resources/stylesheets
         self._stylesheet_name = "main"
+        # one of the file defined in resources/styles
         self._style_name = "main"
-        self._icon_name = "logo.svg"
         self._file_watch_stylesheet: Optional[QtCore.QFileSystemWatcher] = None
 
         self.setOrganizationName(frmb_gui.constants.organisation)
@@ -45,6 +46,13 @@ class FrmbApplication(QtWidgets.QApplication):
         # TODO clean
         frmb_gui.resources.browser.load_font_family("roboto")
         frmb_gui.resources.browser.load_font_family("jetbrainsmono")
+
+    @property
+    def current_style(self) -> dict:
+        """
+        Return the currently active style as a python dictionnary.
+        """
+        return frmb_gui.resources.get_style(self._style_name)
 
     def _install_stylesheet_reload(self):
         """
@@ -63,12 +71,17 @@ class FrmbApplication(QtWidgets.QApplication):
         # XXX: the watcher might call this 2 times in a row depending on how the file
         #   was changed. See https://forum.qt.io/topic/41401/solved-qfilesystemwatcher-reports-change-twice/7
         self.reload_stylesheet()
+        self.reload_icon()
+        LOGGER.debug(
+            f"[{self.__class__.__name__}][_on_stylesheet_changed] triggered by {args}"
+        )
 
     def reload_icon(self):
         """
         Reload the application icon from disk (doesn't work on Mac).
         """
-        icon = frmb_gui.resources.get_icon(self._icon_name)
+        icon_name = self.current_style["icon"]["app-favicon"]
+        icon = frmb_gui.resources.get_icon(icon_name)
         if not frmb_gui.osplatform.is_mac():
             self.setWindowIcon(icon)
 
