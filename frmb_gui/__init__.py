@@ -5,6 +5,7 @@ from . import osplatform
 from . import config
 from . import cli
 from . import resources
+from . import core
 from ._app import FrmbApplication
 from ._app import get_qapp
 from ._window import FrmbMainWindow
