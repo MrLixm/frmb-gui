@@ -28,3 +28,8 @@ is_frozen: bool = bool(getattr(sys, "frozen", False))
 """
 True if the module is being executed from a frozen pyinstaller executable.
 """
+
+documentation_url = "https://mrlixm.github.io/frmb_gui/"
+"""
+url of the online documentation
+"""
