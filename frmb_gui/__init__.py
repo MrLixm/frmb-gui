@@ -2,7 +2,7 @@ from .constants import __version__
 from . import constants
 from . import env
 from . import osplatform
-from . import config
+from ._config import config
 from . import cli
 from . import resources
 from . import core
