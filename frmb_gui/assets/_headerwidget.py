@@ -6,6 +6,7 @@ from qtpy import QtGui
 from qtpy import QtWidgets
 
 import frmb_gui
+from ._rootselector import MenuRootSelectorWidget
 
 LOGGER = logging.getLogger(__name__)
 
@@ -41,11 +42,13 @@ class MainControlBarWidget(QtWidgets.QWidget):
 
         # 1. create
         self.app_title_widget = AppTitleWidget()
+        self.selector_widget = MenuRootSelectorWidget()
         self.layout_main = QtWidgets.QHBoxLayout()
 
         # 2. build layout
         self.setLayout(self.layout_main)
         self.layout_main.addWidget(self.app_title_widget)
+        self.layout_main.addWidget(self.selector_widget)
 
         # 3. modify
         self.layout_main.setContentsMargins(0, 0, 0, 0)
