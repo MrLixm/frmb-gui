@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import Optional
 
 from qtpy import QtCore
@@ -37,3 +38,70 @@ class MenuRootSelectorWidget(QtWidgets.QWidget):
         )
 
         # 4. connect
+        self.button_add.clicked.connect(self._on_add_root)
+        self.button_remove.clicked.connect(self._on_remove_root)
+        self.button_delete.clicked.connect(self._on_delete_root)
+
+    @property
+    def current_root(self) -> frmb_gui.core.FrmbRoot | None:
+        """
+        Return the root currently selected by the user.
+        """
+        return self.main_combobox.currentData()
+
+    def has_root(self, root: frmb_gui.core.FrmbRoot) -> bool:
+        """
+        Return True if the given root is already stored in the combobox as an option.
+
+        Return True even if it is stored in a different instance.
+        """
+        for index in range(self.main_combobox.count()):
+            child_root = self.main_combobox.itemData(index)
+            if child_root == root:
+                return True
+
+        return False
+
+    def _on_add_root(self):
+        dir_path = QtWidgets.QFileDialog.getExistingDirectory(
+            self.parent(),
+            caption="Import or Create a new Root",
+        )
+        if not dir_path:
+            return
+
+        root = frmb_gui.core.FrmbRoot(Path(dir_path))
+        if self.has_root(root):
+            # TODO display dialog ?
+            return
+
+        self.main_combobox.addItem(str(root.path), root)
+        index = self.main_combobox.findData(root)
+        self.main_combobox.setCurrentIndex(index)
+
+    def _on_remove_root(self):
+        self.main_combobox.removeItem(self.main_combobox.currentIndex())
+
+    def _on_delete_root(self):
+        root = self.current_root
+        if not root:
+            return
+
+        user_result = QtWidgets.QMessageBox.warning(
+            self,
+            "Are you sure ?",
+            (
+                f"You are about to delete the current root <{root.path}> from your disk."
+                f"\nThis action is not undoable."
+                f"\nAre you sure to continue ?"
+            ),
+            QtWidgets.QMessageBox.StandardButton.Ok
+            | QtWidgets.QMessageBox.StandardButton.Cancel,
+            QtWidgets.QMessageBox.StandardButton.Cancel,
+        )
+        if user_result == QtWidgets.QMessageBox.StandardButton.Cancel:
+            return
+
+        self._on_remove_root()
+        LOGGER.info(f"deleting {root} ...")
+        frmb_gui.core.delete_root_from_disk(root)
