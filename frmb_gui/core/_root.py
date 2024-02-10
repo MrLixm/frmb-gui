@@ -86,11 +86,11 @@ class FrmbRoot:
         return self._path
 
     @property
-    def children(self) -> list[frmb.FrmbFormat]:
+    def children(self) -> list[frmb.FrmbFile]:
         """
         The Frmb files directly at root, used to parse the hierarchy.
         """
-        return frmb.read_hierarchy_from_root(self._path)
+        return frmb.read_menu_hierarchy_as_file(self._path)
 
     def get_content_hash(self) -> int:
         """
