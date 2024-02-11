@@ -98,7 +98,7 @@ class FrmbApplication(QtWidgets.QApplication):
         """
         Reload the application icon from disk (doesn't work on Mac).
         """
-        icon = self.current_style.get_icon("app-favicon")
+        icon = self.current_style.get_icon("app_favicon")
         if not frmb_gui.osplatform.is_mac():
             self.setWindowIcon(icon)
 

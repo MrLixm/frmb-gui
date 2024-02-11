@@ -1,0 +1,281 @@
+QWidget, QObject {
+    font-family: {{ text.family.default }};
+    font-size: {{ text.size.default }};
+}
+
+/*************
+  BASE WIDGETS
+*/
+
+QLabel {
+    color: {{ text.color.primary }};
+}
+
+QToolTip {
+    background-color: {{ layer.color.low }};
+    color: {{ text.color.primary }};
+    padding: 15px 10px 15px 10px;
+    border: 1px solid transparent;
+    border-color: {{ layer.color.intermediate }};
+    /* TODO see later with ProxyStyle */
+    border-radius: {{ layer.border_radius.default }};
+    font-family: {{ text.family.default }};
+    font-size: {{ text.size.default }};
+}
+
+/*QDialog*/
+QDialog {
+    background-color: {{ layer.color.background }};
+    color: {{ text.color.primary }};
+}
+QDialog QLabel {
+    color: {{ text.color.primary }};
+    margin-bottom: {{ spacing.paragraph }};
+}
+QDialog QLabel[htmltag="h1"] {
+    font-size: {{ text.size.h1 }};
+    font-weight: {{ text.weight.h1 }};
+    margin-bottom: {{ spacing.large }};
+}
+
+/*QPushButton*/
+QPushButton {
+    background-color: transparent;
+    color: {{ text.color.primary }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-radius: {{ layer.border_radius.small }};
+    padding: {{ spacing.normal }}
+}
+QPushButton:hover {
+    background-color: {{ layer.color.intermediate_hi }};
+}
+QPushButton:pressed {
+    background-color: {{ layer.color.low }};
+}
+
+/*QTreeWidget*/
+QTreeWidget {
+    alternate-background-color: {{ layer.color.low_hi }};
+    background-color: {{ layer.color.intermediate }};
+    color: {{ text.color.primary }};
+    border: none;
+    padding: {{ spacing.normal }};
+}
+QTreeWidget QHeaderView::section {
+    background: {{ layer.color.intermediate }};
+    color: {{ text.color.primary }};
+    border-style: solid;
+    border-color: {{ layer.color.high }};
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+}
+QTreeWidget::item {
+    padding: {{ spacing.small }};
+}
+
+/*QDockWidget*/
+QDockWidget {
+    color: {{ text.color.secondary }};
+}
+
+/*QMainWindow*/
+QMainWindow {
+    background-color: {{ layer.color.background }};
+}
+QMainWindow::separator {
+    width: {{ spacing.large }};
+    height: {{ spacing.large }};
+}
+
+/*QMenuBar*/
+QMenuBar {
+    background-color: transparent;
+    color: {{ text.color.primary }};
+}
+QMenuBar::item {
+    padding: {{ spacing.normal }};
+}
+QMenuBar::item:selected {
+    background-color: {{ layer.color.intermediate_hi }};
+    border-bottom: 1px solid;
+    border-color: {{ layer.color.high }};
+}
+QMenuBar::item:pressed {
+    border: unset;
+}
+/*QMenu*/
+QMenu {
+    background-color: {{ layer.color.background }};
+    color: {{ text.color.primary }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    padding: {{ spacing.small }};
+}
+QMenu::item {
+    padding: {{ spacing.small }};
+    padding-left: {{ spacing.normal }};
+}
+QMenu::item:selected {
+    background-color: {{ layer.color.intermediate_hi }};
+    border-left: 2px solid;
+    border-color: {{ layer.color.accent }};
+}
+QMenu::separator {
+    height: 1px;
+    margin: {{ spacing.smaller }};
+    background: {{ layer.color.high }};
+}
+
+/*QComboBox*/
+QComboBox {
+    color: {{ text.color.primary }};
+    font-size: {{ text.size.small }};
+    background-color: {{ layer.color.low }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-radius: {{ layer.border_radius.default }};
+    padding: {{ spacing.smaller }};
+    padding-left: {{ spacing.large }};
+}
+QComboBox:on {
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+}
+QComboBox::drop-down {
+    background: transparent;
+    width: 40px;
+}
+QComboBox::down-arrow {
+    image: url("{{ icon.down_arrow }}");
+}
+QComboBox::down-arrow:on {
+    image: url("{{ icon.up_arrow }}");
+}
+/*QComboBox under popup*/
+QComboBox QAbstractItemView {
+    color: {{ text.color.primary }};
+    background-color: {{ layer.color.low }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-top: unset;
+    border-radius: {{ layer.border_radius.default }};
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    padding: {{ spacing.normal }};
+    padding-left: {{ spacing.huge }};
+    outline: unset;
+}
+QComboBox QAbstractItemView::item {
+    padding: {{ spacing.smaller }};
+}
+QComboBox QAbstractItemView::item:focus {
+    border-left: 1px solid;
+    border-color: {{ layer.color.accent }};
+    font-weight: 900;
+}
+
+/*************
+  CUSTOM WIDGETS
+*/
+
+/* StylesheetIcon */
+QWidget.StylesheetIcon, QWidget.StylesheetIconButton {
+    image-position: center;
+    width: 16px;
+    background-color: transparent;
+    padding: 2px;
+    border-radius: {{ layer.border_radius.default }};
+    /*we use the border as a trick to scale down/up the icon on hover*/
+    border: 2px solid transparent;
+}
+QWidget.StylesheetIconButton:hover {
+    border: unset;
+    background-color: {{ layer.color.intermediate_hi }};
+}
+QWidget.StylesheetIconButton:pressed {
+    background-color: {{ layer.color.low }};
+}
+QWidget.StylesheetIcon[icon-name="main-logo"],
+QWidget.StylesheetIconButton[icon-name="main-logo"] {
+    image: url("{{ icon.header_logo }}");
+}
+QWidget.StylesheetIcon[icon-name="root-add"],
+QWidget.StylesheetIconButton[icon-name="root-add"] {
+    image: url("{{ icon.plus }}");
+}
+QWidget.StylesheetIcon[icon-name="root-remove"],
+QWidget.StylesheetIconButton[icon-name="root-remove"] {
+    image: url("{{ icon.minus }}");
+}
+QWidget.StylesheetIcon[icon-name="root-delete"],
+QWidget.StylesheetIconButton[icon-name="root-delete"] {
+    image: url("{{ icon.folder_remove }}");
+}
+
+QFrame.InnerCentralWidget {
+    margin: {{ spacing.large }};
+}
+
+/* control bar */
+{# XXX: we need to style the AppTitle like the left part of the widget
+    and the MainControlBarWidget like the right part.
+#}
+QFrame.MainControlBarWidget {
+    background-color: {{ layer.color.intermediate_lo }};
+    border-style: solid;
+    border-color: {{ layer.color.high }};
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-top-right-radius: {{ layer.border_radius.default }};
+    border-bottom-right-radius: {{ layer.border_radius.default }};
+    padding: {{ spacing.large }};
+}
+QFrame.AppTitleWidget {
+    background-color: {{ layer.color.intermediate_lo }};
+    border-style: solid;
+    border-color: {{ layer.color.high }};
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: {{ layer.border_radius.default }};
+    border-bottom-left-radius: {{ layer.border_radius.default }};
+    padding-left: {{ spacing.normal }};
+}
+QFrame.AppTitleWidget QLabel {
+    color: {{ text.color.primary }};
+    font-size: 20pt;
+    font-weight: 200;
+}
+QFrame.AppTitleWidget QWidget.StylesheetIcon {
+    min-width: 32px;
+}
+
+/* hierarchy browser*/
+{# XXX: we need to style the FrmbHierarchyBrowserDock like the top part of
+    a widget and the HierarchyBrowserWidget like the bottom part.
+#}
+QDockWidget.FrmbHierarchyBrowserDock::title {
+    background-color: {{ layer.color.intermediate }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-bottom-width: 0;
+    border-top-left-radius: {{ layer.border_radius.default }};
+    border-top-right-radius: {{ layer.border_radius.default }};
+    padding: {{ spacing.small }};
+    text-align: left;
+}
+QFrame.HierarchyBrowserWidget {
+    background-color: {{ layer.color.intermediate }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-top-width: 0;
+    border-bottom-left-radius: {{ layer.border_radius.default }};
+    border-bottom-right-radius: {{ layer.border_radius.default }};
+}
+
+/* dialogs */
+QFrame.IssueDialogFrame, QFrame.AboutDialogFrame {
+    padding: {{ spacing.huge }};
+}

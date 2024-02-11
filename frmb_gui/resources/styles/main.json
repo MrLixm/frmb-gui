@@ -1,30 +1,29 @@
 {
   "layer": {
     "color": {
-      "background": "rgb(2,2,2)",
-      "low": "rgb(10,10,11)",
-      "low_hi": "rgb(13,13,14)",
-      "intermediate_lo": "rgb(28,28,28)",
-      "intermediate": "rgb(36,36,36)",
-      "intermediate_hi": "rgb(40,40,40)",
-      "tooltip": "rgb(23, 20, 5)"
+      "accent": "rgb(191, 121, 216)",
+      "accent_lo": "rgb(144, 90, 168)",
+      "background": "rgb(39,39,39)",
+      "low": "rgb(30,30,30)",
+      "low_hi": "rgb(35,35,35)",
+      "intermediate_lo": "rgb(36,36,36)",
+      "intermediate": "rgb(40,40,40)",
+      "intermediate_hi": "rgb(45,45,45)",
+      "high": "rgb(60,60,60)"
     },
     "border_radius": {
-      "small": "0px",
-      "default": "0px"
+      "small": "3px",
+      "default": "5px"
     }
   },
   "text": {
     "color": {
-      "primary": "rgb(170,170,170)",
+      "primary": "rgb(220,220,220)",
       "secondary": "rgb(120,120,120)",
-      "tertiary": "rgb(80,80,80)",
-      "tooltip": "rgb(132, 115, 60)"
+      "tertiary": "rgb(80,80,80)"
     },
     "family": {
-      "default": "IBM Plex Sans",
-      "bold": "IBM Plex Sans",
-      "thin": "IBM Plex Sans Thin",
+      "default": "Segoe UI",
       "monospace": "JetBrains Mono"
     },
     "size": {
@@ -45,10 +44,12 @@
     "paragraph": "7px"
   },
   "icon": {
-    "app-favicon": "logo-dark-bg.svg",
-    "header-logo": "logo-dark-no-bg.svg",
+    "app_favicon": "logo-dark-bg.svg",
+    "header_logo": "logo-dark-no-bg.svg",
     "plus": "plus-light.svg",
     "minus": "minus-light.svg",
-    "folder-remove": "folder-remove-outline-red.svg"
+    "folder_remove": "folder-remove-outline-red.svg",
+    "down_arrow": "down-arrow-dark.svg",
+    "up_arrow": "up-arrow-dark.svg"
   }
 }
