@@ -2,8 +2,7 @@
 <g clip-path="url(#clip0_1962_3692)">
 <rect width="512" height="512" transform="translate(0.5)" fill="#161616"/>
 <rect x="243" y="217" width="154" height="66" fill="#F8F8F8"/>
-<rect x="115" y="266" width="89" height="156" fill="#F8F8F8"/>
-<path d="M204 90L204 266L115 266L115 178C115 129.399 154.847 90 204 90Z" fill="#F8F8F8"/>
+<path d="M204 90L204 422L115 422L115 178C115 129.399 154.847 90 204 90Z" fill="#F8F8F8"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M243 178H331C331 129.399 291.601 90 243 90V178Z" fill="#BF79D8"/>
 </g>
 <defs>
