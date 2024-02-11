@@ -19,8 +19,13 @@ class CLI:
             description="GUI tool to customize the Windows context-menu using the registry.",
         )
         self.parser.add_argument("--debug", action="store_true")
+        self.parser.add_argument("--devmode", action="store_true")
         self.parsed = self.parser.parse_args(argv)
 
     @property
     def debug(self) -> bool:
         return self.parsed.debug
+
+    @property
+    def devmode(self) -> bool:
+        return self.parsed.devmode

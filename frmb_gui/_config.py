@@ -45,7 +45,7 @@ class _Config:
         This enable features and tools making the development faster.
         """
 
-        if "--devmode" in sys.argv:
+        if CLI().devmode:
             return True
 
         if int(env.developer_mode.get(0)):
