@@ -1,0 +1,7 @@
+{
+  "name": "maketx",
+  "icon": "@CWD/maketx.ico",
+  "paths": [
+    "HKEY_CURRENT_USER\\Software\\Classes\\*"
+  ]
+}

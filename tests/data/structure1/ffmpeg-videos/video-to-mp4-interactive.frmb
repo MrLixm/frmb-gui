@@ -1,0 +1,11 @@
+{
+  "name": "convert source to optimized .mp4 - interactive",
+  "icon": "",
+  "command": [
+    "cmd",
+    "/k",
+    "\"@CWD\\\\ffmpeg-mp4-optimize.bat\"",
+    "%1",
+    "1"
+  ]
+}

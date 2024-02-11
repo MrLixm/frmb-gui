@@ -1,0 +1,11 @@
+{
+  "name": "abcinfo verbose",
+  "icon": "",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"%%ABCINFO%%\"",
+    "-v",
+    "\"%1\"\""
+  ]
+}

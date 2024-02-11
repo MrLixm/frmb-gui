@@ -1,0 +1,10 @@
+{
+  "name": "convert to .png - 8bit",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"@CWD\\\\batch\\\\oiiotool-png-convert.bat\"",
+    "\"%1\"\"",
+    "uint8"
+  ]
+}

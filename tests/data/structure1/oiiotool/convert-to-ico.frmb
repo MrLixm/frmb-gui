@@ -1,0 +1,9 @@
+{
+  "name": "convert to .ico",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"@CWD\\\\batch\\\\oiiotool-ico-convert.bat\"",
+    "\"%1\"\""
+  ]
+}

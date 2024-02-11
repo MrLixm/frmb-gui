@@ -1,0 +1,10 @@
+{
+  "name": "abcinfo",
+  "icon": "",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"%%ABCINFO%%\"",
+    "\"%1\"\""
+  ]
+}

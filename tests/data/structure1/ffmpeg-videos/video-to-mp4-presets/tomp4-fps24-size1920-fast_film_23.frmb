@@ -1,0 +1,17 @@
+{
+  "name": "convert .mp4 - fps:24 size:1920 quality:fast:film:23",
+  "icon": "",
+  "command": [
+    "cmd",
+    "/k",
+    "\"@CWD\\\\..\\\\ffmpeg-mp4-optimize.bat\"",
+    "%1",
+    "0",
+    "24",
+    "fast",
+    "film",
+    "23",
+    "1920",
+    "-opti"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "convert sequence to video - interactive",
+  "icon": "",
+  "command": [
+    "cmd",
+    "/k",
+    "\"@CWD\\\\ffmpeg-seq-to-video.bat\"",
+    "%1"
+  ]
+}

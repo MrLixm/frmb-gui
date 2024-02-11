@@ -1,0 +1,7 @@
+{
+  "name": "abcinfo",
+  "icon": "%ABCINFO%",
+  "paths": [
+    "HKEY_CURRENT_USER\\Software\\Classes\\SystemFileAssociations\\.abc"
+  ]
+}

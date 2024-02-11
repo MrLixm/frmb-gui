@@ -1,0 +1,7 @@
+{
+  "name": "OIIO Tool",
+  "icon": "@CWD/oiiotool.ico",
+  "paths": [
+    "HKEY_CURRENT_USER\\Software\\Classes\\*"
+  ]
+}

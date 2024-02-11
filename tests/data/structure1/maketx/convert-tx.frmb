@@ -1,0 +1,15 @@
+{
+  "name": "convert to .tx",
+  "icon": "",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"%%MAKETX%%\"",
+    "\"%1\"\"",
+    "-v",
+    "-u",
+    "--unpremult",
+    "--format",
+    "exr"
+  ]
+}

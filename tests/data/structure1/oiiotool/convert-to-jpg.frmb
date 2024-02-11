@@ -1,0 +1,9 @@
+{
+  "name": "convert to .jpg",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"@CWD\\\\batch\\\\oiiotool-jpg-convert.bat\"",
+    "\"%1\"\""
+  ]
+}

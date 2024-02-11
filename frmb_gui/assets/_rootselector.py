@@ -108,9 +108,15 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         self.root_changed_signal.emit()
 
     def _on_add_root(self):
+
+        initial_dir = ""
+        if frmb_gui.config.developer_mode:
+            initial_dir = str(Path(frmb_gui.__path__[0]).parent / "tests" / "data")
+
         dir_path = QtWidgets.QFileDialog.getExistingDirectory(
             self.parent(),
             caption="Import or Create a new Root",
+            dir=initial_dir,
         )
         if not dir_path:
             return

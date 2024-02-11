@@ -1,0 +1,12 @@
+{
+  "name": "display info (subimages)",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"%%OIIOTOOL%%\"",
+    "--info",
+    "-v",
+    "-a",
+    "\"%1\"\""
+  ]
+}

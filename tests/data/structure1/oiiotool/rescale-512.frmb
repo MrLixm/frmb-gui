@@ -1,0 +1,10 @@
+{
+  "name": "rescale 512",
+  "command": [
+    "cmd",
+    "/k",
+    "\"\"@CWD\\\\batch\\\\oiiotool-rescale.bat\"",
+    "\"%1\"\"",
+    "512"
+  ]
+}
