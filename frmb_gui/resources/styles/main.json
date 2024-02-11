@@ -48,6 +48,7 @@
     "app-favicon": "logo-dark-bg.svg",
     "header-logo": "logo-dark-no-bg.svg",
     "plus": "plus-light.svg",
-    "minus": "minus-light.svg"
+    "minus": "minus-light.svg",
+    "folder-remove": "folder-remove-outline-red.svg"
   }
 }

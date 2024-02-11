@@ -21,10 +21,9 @@ class MenuRootSelectorWidget(QtWidgets.QWidget):
 
         # 1. create
         self.main_combobox = QtWidgets.QComboBox()
-        # TODO placeholder
-        self.button_add = QtWidgets.QPushButton("add")
-        self.button_remove = QtWidgets.QPushButton("remove")
-        self.button_delete = QtWidgets.QPushButton("delete")
+        self.button_add = QtWidgets.QPushButton()
+        self.button_remove = QtWidgets.QPushButton()
+        self.button_delete = QtWidgets.QPushButton()
         self.layout_main = QtWidgets.QHBoxLayout()
 
         # 2. build layout
@@ -43,6 +42,17 @@ class MenuRootSelectorWidget(QtWidgets.QWidget):
         self.main_combobox.setContextMenuPolicy(
             QtCore.Qt.ContextMenuPolicy.CustomContextMenu
         )
+        icon = frmb_gui.get_qapp().current_style.get_icon("plus")
+        self.button_add.setIcon(icon)
+        self.button_add.setToolTip("Import new Root")
+
+        icon = frmb_gui.get_qapp().current_style.get_icon("minus")
+        self.button_remove.setIcon(icon)
+        self.button_remove.setToolTip("Remove current Root")
+
+        icon = frmb_gui.get_qapp().current_style.get_icon("folder-remove")
+        self.button_delete.setIcon(icon)
+        self.button_delete.setToolTip("Delete current Root from disk")
 
         # 4. connect
         self.button_add.clicked.connect(self._on_add_root)
