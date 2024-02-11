@@ -54,3 +54,9 @@ class MainControlBarWidget(QtWidgets.QWidget):
         self.layout_main.setContentsMargins(0, 0, 0, 0)
 
         # 4. connect
+        self.selector_widget.root_changed_signal.connect(self._on_emit_root_changed)
+
+    def _on_emit_root_changed(self):
+        root = self.selector_widget.current_root
+        controller = frmb_gui.get_qapp().controller
+        controller.root_changed_signal.emit(root)

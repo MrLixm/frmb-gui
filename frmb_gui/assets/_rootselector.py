@@ -12,6 +12,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 class MenuRootSelectorWidget(QtWidgets.QWidget):
+
+    root_changed_signal = QtCore.Signal()
+
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
         super().__init__(parent)
 
@@ -41,6 +44,7 @@ class MenuRootSelectorWidget(QtWidgets.QWidget):
         self.button_add.clicked.connect(self._on_add_root)
         self.button_remove.clicked.connect(self._on_remove_root)
         self.button_delete.clicked.connect(self._on_delete_root)
+        self.main_combobox.currentIndexChanged.connect(self._on_index_changed)
 
     @property
     def current_root(self) -> frmb_gui.core.FrmbRoot | None:
@@ -61,6 +65,9 @@ class MenuRootSelectorWidget(QtWidgets.QWidget):
                 return True
 
         return False
+
+    def _on_index_changed(self, *args):
+        self.root_changed_signal.emit()
 
     def _on_add_root(self):
         dir_path = QtWidgets.QFileDialog.getExistingDirectory(
