@@ -30,8 +30,7 @@ class AppTitleWidget(QtWidgets.QFrame):
         self._update_logo()
 
     def _update_logo(self):
-        logo_icon_name = frmb_gui.get_qapp().current_style["icon"]["header-logo"]
-        logo_icon = frmb_gui.resources.get_icon(logo_icon_name)
+        logo_icon = frmb_gui.get_qapp().current_style.get_icon("header-logo")
         logo_pixmap = logo_icon.pixmap(64)
         self.logo.setPixmap(logo_pixmap)
 
