@@ -29,7 +29,7 @@ class AppTitleWidget(QtWidgets.QFrame):
         self.layout_main.setContentsMargins(0, 0, 0, 0)
 
 
-class MainControlBarWidget(QtWidgets.QWidget):
+class MainControlBarWidget(QtWidgets.QFrame):
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
         super().__init__(parent)
 

@@ -164,7 +164,7 @@ class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
             self._populate(file.children, parent=item)
 
 
-class HierarchyBrowserWidget(QtWidgets.QWidget):
+class HierarchyBrowserWidget(QtWidgets.QFrame):
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
         super().__init__(parent)
 

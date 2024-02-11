@@ -12,7 +12,7 @@ import frmb_gui
 LOGGER = logging.getLogger(__name__)
 
 
-class MenuRootSelectorWidget(QtWidgets.QWidget):
+class MenuRootSelectorWidget(QtWidgets.QFrame):
 
     root_changed_signal = QtCore.Signal()
 
