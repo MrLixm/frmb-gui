@@ -45,6 +45,9 @@ class FrmbFileTreeWidgetItem(QtWidgets.QTreeWidgetItem):
         self._frmb_file: frmb.FrmbFile = frmb_file
         self.update_content()
 
+    def __str__(self) -> str:
+        return f"<{self.__class__.__name__} file={self._frmb_file}>"
+
     @classmethod
     def get_index(cls, name: str) -> int:
         return cls.columns[name]["index"]
