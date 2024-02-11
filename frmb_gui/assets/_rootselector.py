@@ -63,6 +63,7 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         )
         controller = frmb_gui.get_qapp().controller
         controller.open_root_explorer_action = self._on_open_root_in_explorer
+        controller.add_root_action = self._on_add_root
 
     @property
     def current_root(self) -> frmb_gui.core.FrmbRoot | None:

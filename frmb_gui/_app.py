@@ -35,6 +35,11 @@ class ApplicationController(QtCore.QObject):
     Callable that open the currently selected root in the system file explorer.
     """
 
+    add_root_action: Callable[[], None] = None
+    """
+    Callable that opena file explorer to select a root to add.
+    """
+
 
 class FrmbApplication(QtWidgets.QApplication):
     """

@@ -25,6 +25,7 @@ class MainMenuBar(QtWidgets.QMenuBar):
         self.menu_edit = self.addMenu("Edit")
         self.menu_help = self.addMenu("Help")
 
+        self.action_add_root = QtWidgets.QAction("Open Root Directory")
         self.action_exit = QtWidgets.QAction("Exit")
         self.action_about = QtWidgets.QAction("About")
         self.action_open_doc = QtWidgets.QAction("Open Documentation")
@@ -36,6 +37,7 @@ class MainMenuBar(QtWidgets.QMenuBar):
         )
 
         # 2. Add
+        self.menu_file.addAction(self.action_add_root)
         self.menu_file.addAction(self.action_exit)
         self.menu_help.addAction(self.action_about)
         self.menu_help.addAction(self.action_open_doc)
@@ -45,10 +47,11 @@ class MainMenuBar(QtWidgets.QMenuBar):
         self.menu_edit.addAction(self.action_open_root_explorer)
 
         # 3. Modify
+        self.action_add_root.setShortcut("Ctrl+O")
         self.action_exit.setShortcut("Ctrl+Q")
 
         # 4. Connections
-        controller = frmb_gui.get_qapp().controller
+        self.action_add_root.triggered.connect(self._on_add_root)
         self.action_exit.triggered.connect(QtWidgets.QApplication.quit)
         self.action_issue.triggered.connect(self._on_dialog_issue_show)
         self.action_open_doc.triggered.connect(self._on_open_documentation)
@@ -96,3 +99,8 @@ class MainMenuBar(QtWidgets.QMenuBar):
     @staticmethod
     def _on_print_config():
         frmb_gui.config.__debugging__()
+
+    @staticmethod
+    def _on_add_root():
+        controller = frmb_gui.get_qapp().controller
+        controller.add_root_action()
