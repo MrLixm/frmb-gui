@@ -10,6 +10,7 @@ from qtpy import QtWidgets
 
 from .assets import MainMenuBar
 from .assets import MainControlBarWidget
+from .assets import HierarchyBrowserWidget
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,14 +24,25 @@ class FrmbControlBarDock(QtWidgets.QDockWidget):
         self.setFeatures(self.DockWidgetFeature.DockWidgetMovable)
 
 
+class FrmbHierarchyBrowserDock(QtWidgets.QDockWidget):
+    def __init__(self, parent: QtWidgets.QWidget = None):
+        super().__init__(parent)
+        self.main_widget = HierarchyBrowserWidget()
+        self.setWidget(self.main_widget)
+        self.setWindowTitle("Hierarchy Browser")
+        self.setFeatures(self.DockWidgetFeature.NoDockWidgetFeatures)
+
+
 class FrmbMainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent: QtWidgets.QWidget = None):
         super().__init__(parent)
 
         self.menubar = MainMenuBar(self)
         self.control_bar_dock = FrmbControlBarDock()
+        self.hierarchy_dock = FrmbHierarchyBrowserDock()
 
         self.setMenuBar(self.menubar)
+        self.setCentralWidget(self.hierarchy_dock)
         self.addDockWidget(
             QtCore.Qt.DockWidgetArea.TopDockWidgetArea, self.control_bar_dock
         )
