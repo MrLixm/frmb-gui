@@ -10,6 +10,7 @@ from qtpy import QtWidgets
 
 from .assets import MainMenuBar
 from .assets import MainControlBarWidget
+from .assets import AppTitleWidget
 from .assets import HierarchyBrowserWidget
 
 LOGGER = logging.getLogger(__name__)
@@ -19,9 +20,14 @@ class FrmbControlBarDock(QtWidgets.QDockWidget):
     def __init__(self, parent: QtWidgets.QWidget = None):
         super().__init__(parent)
         self.main_widget = MainControlBarWidget()
+        self.titlebar_widget = AppTitleWidget()
         self.setWidget(self.main_widget)
         self.setWindowTitle("Control Bar")
-        self.setFeatures(self.DockWidgetFeature.DockWidgetMovable)
+        self.setFeatures(
+            self.DockWidgetFeature.DockWidgetMovable
+            | self.DockWidgetFeature.DockWidgetVerticalTitleBar
+        )
+        self.setTitleBarWidget(self.titlebar_widget)
 
 
 class FrmbHierarchyBrowserDock(QtWidgets.QDockWidget):
