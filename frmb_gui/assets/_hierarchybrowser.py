@@ -60,6 +60,8 @@ class FrmbFileTreeWidgetItem(QtWidgets.QTreeWidgetItem):
 
         icon_path = self._frmb_file.content.icon
         icon = QtGui.QIcon(str(icon_path)) if icon_path and icon_path.exists() else None
+        if icon is not None and icon.isNull():
+            LOGGER.warning(f"Cannot load existing icon <{icon_path}> to QIcon")
 
         self.setCheckState(
             0,
@@ -71,7 +73,7 @@ class FrmbFileTreeWidgetItem(QtWidgets.QTreeWidgetItem):
         )
         self.setText(self.get_index("name"), self._frmb_file.content.name)
         self.setText(self.get_index("file_name"), self._frmb_file.path.stem)
-        self.setText(self.get_index("icon"), str(icon_path if icon else "" or ""))
+        self.setText(self.get_index("icon"), str(icon_path if not icon else "" or ""))
         self.setIcon(self.get_index("icon"), icon or QtGui.QIcon())
         self.setText(self.get_index("paths"), str(self._frmb_file.content.paths))
         self.setText(
