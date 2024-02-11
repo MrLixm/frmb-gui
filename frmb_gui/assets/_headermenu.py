@@ -31,6 +31,9 @@ class MainMenuBar(QtWidgets.QMenuBar):
         # TODO add log directory action when the feature is implemented
         self.action_discord = QtWidgets.QAction("Join the Discord Server")
         self.action_issue = QtWidgets.QAction("Report an Issue")
+        self.action_open_root_explorer = QtWidgets.QAction(
+            "Open Current Root in File Explorer"
+        )
 
         # 2. Add
         self.menu_file.addAction(self.action_exit)
@@ -39,16 +42,19 @@ class MainMenuBar(QtWidgets.QMenuBar):
         self.menu_help.addSeparator()
         self.menu_help.addAction(self.action_discord)
         self.menu_help.addAction(self.action_issue)
+        self.menu_edit.addAction(self.action_open_root_explorer)
 
         # 3. Modify
         self.action_exit.setShortcut("Ctrl+Q")
 
         # 4. Connections
+        controller = frmb_gui.get_qapp().controller
         self.action_exit.triggered.connect(QtWidgets.QApplication.quit)
         self.action_issue.triggered.connect(self._on_dialog_issue_show)
         self.action_open_doc.triggered.connect(self._on_open_documentation)
         self.action_about.triggered.connect(self._on_dialog_about_show)
         self.action_discord.triggered.connect(self._on_open_discord_invite)
+        self.action_open_root_explorer.triggered.connect(self._on_open_root_explorer)
 
     @staticmethod
     def _on_open_documentation():
@@ -63,3 +69,8 @@ class MainMenuBar(QtWidgets.QMenuBar):
 
     def _on_dialog_about_show(self):
         self.dialog_about.show()
+
+    @staticmethod
+    def _on_open_root_explorer():
+        controller = frmb_gui.get_qapp().controller
+        controller.open_root_explorer_action()

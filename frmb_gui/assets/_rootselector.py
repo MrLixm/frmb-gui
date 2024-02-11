@@ -1,4 +1,5 @@
 import logging
+import webbrowser
 from pathlib import Path
 from typing import Optional
 
@@ -39,12 +40,20 @@ class MenuRootSelectorWidget(QtWidgets.QWidget):
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Fixed,
         )
+        self.main_combobox.setContextMenuPolicy(
+            QtCore.Qt.ContextMenuPolicy.CustomContextMenu
+        )
 
         # 4. connect
         self.button_add.clicked.connect(self._on_add_root)
         self.button_remove.clicked.connect(self._on_remove_root)
         self.button_delete.clicked.connect(self._on_delete_root)
         self.main_combobox.currentIndexChanged.connect(self._on_index_changed)
+        self.main_combobox.customContextMenuRequested[QtCore.QPoint].connect(
+            self._on_context_menu_combobox
+        )
+        controller = frmb_gui.get_qapp().controller
+        controller.open_root_explorer_action = self._on_open_root_in_explorer
 
     @property
     def current_root(self) -> frmb_gui.core.FrmbRoot | None:
@@ -65,6 +74,25 @@ class MenuRootSelectorWidget(QtWidgets.QWidget):
                 return True
 
         return False
+
+    def _on_context_menu_combobox(self):
+
+        if not self.current_root:
+            return
+
+        qmenu = QtWidgets.QMenu(self)
+        action1 = QtWidgets.QAction("Open In File Explorer")
+        action1.triggered.connect(self._on_open_root_in_explorer)
+        qmenu.addAction(action1)
+        qmenu.exec_(QtGui.QCursor.pos())
+
+    def _on_open_root_in_explorer(self):
+
+        if not self.current_root:
+            return
+
+        path = self.current_root.path
+        webbrowser.open(str(path))
 
     def _on_index_changed(self, *args):
         self.root_changed_signal.emit()

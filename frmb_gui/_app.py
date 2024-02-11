@@ -30,6 +30,11 @@ class ApplicationController(QtCore.QObject):
     The object is a frmb_gui.core.FrmbRoot instance.
     """
 
+    open_root_explorer_action: Callable[[], None] = None
+    """
+    Callable that open the currently selected root in the system file explorer.
+    """
+
 
 class FrmbApplication(QtWidgets.QApplication):
     """
