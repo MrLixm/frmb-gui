@@ -153,7 +153,15 @@ class UiStyle:
             stylesheet: document with potential jinja2 variables
         """
         template = JINJA_ENV.from_string(stylesheet)
-        resolved = template.render(self.content)
+        content = self.content.copy()
+        # resolve icon paths
+        content["icon"] = {
+            icon_name: frmb_gui.resources.browser.resolve_path_to_qss(
+                str(frmb_gui.resources.get_icon_path(icon_value))
+            )
+            for icon_name, icon_value in content["icon"].items()
+        }
+        resolved = template.render(content)
         return resolved
 
     def get_stylesheet(self, name: str) -> str:
