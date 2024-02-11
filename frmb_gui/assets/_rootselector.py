@@ -21,21 +21,27 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         super().__init__(parent)
 
         # 1. create
+        self.layout_main = QtWidgets.QHBoxLayout()
+        self.layout_box = QtWidgets.QVBoxLayout()
         self.main_combobox = QtWidgets.QComboBox()
+        self.label_title = QtWidgets.QLabel("current menu root")
         self.button_add = StylesheetIconButton("root-add")
         self.button_remove = StylesheetIconButton("root-remove")
         self.button_delete = StylesheetIconButton("root-delete")
-        self.layout_main = QtWidgets.QHBoxLayout()
 
         # 2. build layout
-        self.setLayout(self.layout_main)
+        self.setLayout(self.layout_box)
         self.layout_main.addWidget(self.main_combobox)
         self.layout_main.addWidget(self.button_add)
         self.layout_main.addWidget(self.button_remove)
         self.layout_main.addWidget(self.button_delete)
+        self.layout_box.addLayout(self.layout_main)
+        self.layout_box.addWidget(self.label_title)
+        self.layout_box.addStretch(1)
 
         # 3. modify
         self.layout_main.setContentsMargins(0, 0, 0, 0)
+        self.layout_box.setContentsMargins(0, 0, 0, 0)
         self.main_combobox.setSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Fixed,
