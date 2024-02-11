@@ -294,8 +294,10 @@ QWidget.StylesheetIconButton[icon-name="root-delete"] {
     image: url("{{ icon.folder_remove }}");
 }
 
+/* main window padding */
 QFrame.InnerCentralWidget {
-    margin: {{ spacing.large }};
+    margin: {{ spacing.normal }};
+    margin-top: unset;
 }
 
 /* control bar */

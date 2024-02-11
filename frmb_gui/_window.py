@@ -29,6 +29,12 @@ class FrmbControlBarDock(QtWidgets.QDockWidget):
         )
         self.setTitleBarWidget(self.titlebar_widget)
 
+        effect = QtWidgets.QGraphicsDropShadowEffect(self)
+        effect.setColor(QtGui.QColor(0, 0, 0, 100))
+        effect.setOffset(0, 0)
+        effect.setBlurRadius(20)
+        self.setGraphicsEffect(effect)
+
 
 class FrmbHierarchyBrowserDock(QtWidgets.QDockWidget):
     def __init__(self, parent: QtWidgets.QWidget = None):
@@ -37,6 +43,12 @@ class FrmbHierarchyBrowserDock(QtWidgets.QDockWidget):
         self.setWidget(self.main_widget)
         self.setWindowTitle("Hierarchy Browser")
         self.setFeatures(self.DockWidgetFeature.NoDockWidgetFeatures)
+
+        effect = QtWidgets.QGraphicsDropShadowEffect(self)
+        effect.setColor(QtGui.QColor(0, 0, 0, 100))
+        effect.setOffset(0, 0)
+        effect.setBlurRadius(20)
+        self.setGraphicsEffect(effect)
 
 
 # we split an inner main window so the menu bar is not affected by the content margins
@@ -49,6 +61,8 @@ class InnerMainWindow(QtWidgets.QMainWindow):
         self.addDockWidget(
             QtCore.Qt.DockWidgetArea.TopDockWidgetArea, self.control_bar_dock
         )
+        # leave room for the drop-shadow
+        self.setContentsMargins(10, 10, 10, 10)
 
 
 # add an intermediate QFrame, so we can add margins via stylesheet
