@@ -175,6 +175,87 @@ QComboBox QAbstractItemView::item:focus {
     font-weight: 900;
 }
 
+/*QScrollBar*/
+QScrollBar:vertical, QScrollBar:horizontal {
+    background: {{ layer.color.background }};
+    border: none;
+}
+QScrollBar:vertical {
+    width: 18px;
+    margin: 22px 0px 22px 0px;
+}
+QScrollBar:horizontal {
+    height: 18px;
+    margin: 0px 22px 0px 22px;
+}
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal,
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    /*remove "dotted" pattern*/
+    background: none;
+}
+QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+    background-color: {{ layer.color.high }};
+    border-radius: {{ layer.border_radius.default }};
+}
+QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+    background-color: {{ layer.color.high_hi }};
+}
+QScrollBar::handle:vertical {
+    min-height: 20px;
+}
+QScrollBar::handle:horizontal {
+    min-width: 20px;
+}
+QScrollBar::add-line:vertical {
+    background-color: transparent;
+    height: 20px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+    background-color: transparent;
+    height: 20px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+QScrollBar::add-line:horizontal {
+    background-color: transparent;
+    width: 20px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+    background-color: transparent;
+    width: 20px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow {
+    background: url("{{ icon.up_arrow }}");
+    width: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+QScrollBar::down-arrow {
+    background: url("{{ icon.down_arrow }}");
+    width: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+QScrollBar::left-arrow {
+    background: url("{{ icon.left_arrow }}");
+    height: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+QScrollBar::right-arrow {
+    background: url("{{ icon.right_arrow }}");
+    height: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 /*************
   CUSTOM WIDGETS
 */

@@ -20,12 +20,17 @@ class MainWidget(QtWidgets.QWidget):
         self.button = QtWidgets.QPushButton("place holder")
         self.label = QtWidgets.QLabel("PlaceHolder Label")
         self.combobox = QtWidgets.QComboBox()
+        self.scroll_area = QtWidgets.QScrollArea()
+        image_label = QtWidgets.QLabel()
+        image = QtGui.QIcon(str(frmb_gui.resources.get_icon_path("logo-dark-bg.svg")))
+        image_label.setPixmap(image.pixmap(1024))
 
         # 2. build layout
         self.setLayout(self.layout_main)
         self.layout_main.addWidget(self.button)
         self.layout_main.addWidget(self.label)
         self.layout_main.addWidget(self.combobox)
+        self.layout_main.addWidget(self.scroll_area)
 
         # 3. modify
         self.layout_main.setContentsMargins(*([25] * 4))
@@ -37,6 +42,9 @@ class MainWidget(QtWidgets.QWidget):
                 r"Z:\packages-dev\frmb-gui\frmb_gui\_window.py",
             ]
         )
+        self.scroll_area.setWidget(image_label)
+        self.scroll_area.setMaximumWidth(500)
+        self.scroll_area.setMaximumHeight(500)
 
         # 4. connect
 
