@@ -56,6 +56,20 @@ class MainMenuBar(QtWidgets.QMenuBar):
         self.action_discord.triggered.connect(self._on_open_discord_invite)
         self.action_open_root_explorer.triggered.connect(self._on_open_root_explorer)
 
+        if frmb_gui.config.developer_mode:
+            self._build_dev_menu()
+
+    def _build_dev_menu(self):
+        menu_debug = self.addMenu("Debug")
+
+        action_print_stylesheet = QtWidgets.QAction("Print Stylesheet", menu_debug)
+        action_print_stylesheet.triggered.connect(self._on_print_stylesheet)
+        menu_debug.addAction(action_print_stylesheet)
+
+        action_print_config = QtWidgets.QAction("Print Config", menu_debug)
+        action_print_config.triggered.connect(self._on_print_config)
+        menu_debug.addAction(action_print_config)
+
     @staticmethod
     def _on_open_documentation():
         webbrowser.open(frmb_gui.constants.documentation_url)
@@ -74,3 +88,11 @@ class MainMenuBar(QtWidgets.QMenuBar):
     def _on_open_root_explorer():
         controller = frmb_gui.get_qapp().controller
         controller.open_root_explorer_action()
+
+    @staticmethod
+    def _on_print_stylesheet():
+        print(frmb_gui.get_qapp().styleSheet())
+
+    @staticmethod
+    def _on_print_config():
+        frmb_gui.config.__debugging__()
