@@ -45,7 +45,7 @@
     "paragraph": "7px"
   },
   "icon": {
-    "app-favicon": "logo.svg",
+    "app-favicon": "logo-dark-bg.svg",
     "header-logo": "logo-dark-no-bg.svg",
     "plus": "plus-light.svg",
     "minus": "minus-light.svg"
