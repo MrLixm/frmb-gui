@@ -54,24 +54,70 @@ QPushButton:pressed {
     background-color: {{ layer.color.low }};
 }
 
+/*ScrollArea (used in QTreeWidget)*/
+QAbstractScrollArea {
+    background-color: {{ layer.color.intermediate }};
+}
 /*QTreeWidget*/
 QTreeWidget {
-    alternate-background-color: {{ layer.color.low_hi }};
+    alternate-background-color: {{ layer.color.intermediate }};
     background-color: {{ layer.color.intermediate }};
     color: {{ text.color.primary }};
     border: none;
     padding: {{ spacing.normal }};
+    outline: unset;
+}
+QTreeWidget QHeaderView {
+    margin-right: {{ spacing.large }};
 }
 QTreeWidget QHeaderView::section {
     background: {{ layer.color.intermediate }};
-    color: {{ text.color.primary }};
-    border-style: solid;
+    color: {{ text.color.secondary }};
+    border: unset;
+    border-bottom: 1px solid;
     border-color: {{ layer.color.high }};
-    border-bottom-width: 1px;
-    border-top-width: 1px;
+    padding: {{ spacing.small }};
+    margin-bottom: {{ spacing.small }};
 }
 QTreeWidget::item {
+    color: {{ text.color.primary }};
     padding: {{ spacing.small }};
+}
+QTreeWidget::item:selected {
+    background-color: {{ layer.color.intermediate_hi }};
+}
+QTreeWidget::item:focus {
+    border: 1px solid;
+    border-color: {{ layer.color.accent }};
+    border-top-left-radius: {{ layer.border_radius.default }};
+    border-top-right-radius: {{ layer.border_radius.default }};
+}
+QTreeWidget::item::indicator {
+    /*for some weird reason we have 2 checkbox superposed that are applied ?*/
+    image: unset;
+}
+QTreeWidget::indicator {
+    height: 16px;
+    width: 16px;
+}
+QTreeWidget::indicator:checked {
+    image: url("{{ icon.box_checked }}");
+}
+QTreeWidget::indicator:unchecked {
+    image: url("{{ icon.box_unchecked }}");
+}
+QTreeWidget::indicator:indeterminate {
+    image: url("{{ icon.box_indeterminate }}");
+}
+QTreeWidget::branch {
+    border: unset;
+    padding: 5px;
+}
+QTreeView::branch:open {
+    image: url("{{ icon.down_arrow }}");
+}
+QTreeView::branch:closed:has-children {
+    image: url("{{ icon.right_arrow }}");
 }
 
 /*QDockWidget*/

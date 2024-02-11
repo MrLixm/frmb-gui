@@ -9,8 +9,8 @@
       "intermediate_lo": "rgb(36,36,36)",
       "intermediate": "rgb(40,40,40)",
       "intermediate_hi": "rgb(45,45,45)",
-      "high": "rgb(60,60,60)",
-      "high_hi": "rgb(70,70,70)"
+      "high": "rgb(50,50,50)",
+      "high_hi": "rgb(60,60,60)"
     },
     "border_radius": {
       "small": "3px",
@@ -53,6 +53,14 @@
     "down_arrow": "down-arrow-dark.svg",
     "up_arrow": "up-arrow-dark.svg",
     "left_arrow": "left-arrow-dark.svg",
-    "right_arrow": "right-arrow-dark.svg"
+    "right_arrow": "right-arrow-dark.svg",
+    "box_checked": "box-checked-dark.svg",
+    "box_unchecked": "box-unchecked-dark.svg",
+    "box_indeterminate": "box-indeterminate-dark.svg"
+  },
+  "widget": {
+    "treewidget": {
+      "indent": 30
+    }
   }
 }

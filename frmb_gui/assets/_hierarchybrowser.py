@@ -132,6 +132,12 @@ class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
         """
         Paint a useful text when there is no root, or it has no children.
         """
+        style = frmb_gui.get_qapp().current_style
+        indentation = (
+            style.content.get("widget", {}).get("treewidget", {}).get("indent", 30)
+        )
+        self.setIndentation(indentation)
+
         super().paintEvent(event)
 
         text = None
