@@ -223,8 +223,9 @@ QComboBox QAbstractItemView::item:focus {
 
 /*QScrollBar*/
 QScrollBar:vertical, QScrollBar:horizontal {
-    background: {{ layer.color.background }};
+    background: {{ layer.color.low_hi }};
     border: none;
+    border-radius: {{ layer.border_radius.default }};
 }
 QScrollBar:vertical {
     width: 18px;
@@ -240,17 +241,19 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: none;
 }
 QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
-    background-color: {{ layer.color.high }};
+    background-color: {{ layer.color.intermediate_hi }};
     border-radius: {{ layer.border_radius.default }};
 }
 QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
-    background-color: {{ layer.color.high_hi }};
+    background-color: {{ layer.color.high }};
 }
 QScrollBar::handle:vertical {
     min-height: 20px;
+    margin: 3px;
 }
 QScrollBar::handle:horizontal {
     min-width: 20px;
+    margin: 3px;
 }
 QScrollBar::add-line:vertical {
     background-color: transparent;
@@ -411,4 +414,16 @@ QFrame.HierarchyBrowserWidget {
 /* dialogs */
 QFrame.IssueDialogFrame, QFrame.AboutDialogFrame {
     padding: {{ spacing.huge }};
+}
+QFrame.ContextWidget QLabel {
+    font-family: {{ text.family.monospace }};
+    background-color: {{ layer.color.low }};
+    padding: {{ spacing.normal }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-radius: {{ layer.border_radius.default }};
+}
+QTreeWidget.DependencyViewerTreeWidget {
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
 }
