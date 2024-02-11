@@ -18,6 +18,19 @@ import frmb_gui
 LOGGER = logging.getLogger(__name__)
 
 
+class ApplicationController(QtCore.QObject):
+    """
+    A high-level object to transfer information between arbitrary nested widget easily.
+    """
+
+    root_changed_signal = QtCore.Signal(object)
+    """
+    Emitted when the root directory is changed.
+    
+    The object is a frmb_gui.core.FrmbRoot instance.
+    """
+
+
 class FrmbApplication(QtWidgets.QApplication):
     """
     QApplication to use as unique instance.
@@ -31,6 +44,7 @@ class FrmbApplication(QtWidgets.QApplication):
     def __init__(self):
         super().__init__()
 
+        self._controller = ApplicationController()
         self._style_callbacks: list[Callable[[dict], None]] = []
 
         # one of the file defined in resources/stylesheets
@@ -57,6 +71,10 @@ class FrmbApplication(QtWidgets.QApplication):
         # TODO clean
         frmb_gui.resources.browser.load_font_family("roboto")
         frmb_gui.resources.browser.load_font_family("jetbrainsmono")
+
+    @property
+    def controller(self) -> ApplicationController:
+        return self._controller
 
     @property
     def current_style(self) -> dict:
