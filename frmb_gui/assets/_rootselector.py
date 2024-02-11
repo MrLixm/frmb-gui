@@ -8,6 +8,7 @@ from qtpy import QtGui
 from qtpy import QtWidgets
 
 import frmb_gui
+from ._icon import StylesheetIconButton
 
 LOGGER = logging.getLogger(__name__)
 
@@ -21,9 +22,9 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
 
         # 1. create
         self.main_combobox = QtWidgets.QComboBox()
-        self.button_add = QtWidgets.QPushButton()
-        self.button_remove = QtWidgets.QPushButton()
-        self.button_delete = QtWidgets.QPushButton()
+        self.button_add = StylesheetIconButton("root-add")
+        self.button_remove = StylesheetIconButton("root-remove")
+        self.button_delete = StylesheetIconButton("root-delete")
         self.layout_main = QtWidgets.QHBoxLayout()
 
         # 2. build layout
@@ -42,16 +43,8 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         self.main_combobox.setContextMenuPolicy(
             QtCore.Qt.ContextMenuPolicy.CustomContextMenu
         )
-        icon = frmb_gui.get_qapp().current_style.get_icon("plus")
-        self.button_add.setIcon(icon)
         self.button_add.setToolTip("Import new Root")
-
-        icon = frmb_gui.get_qapp().current_style.get_icon("minus")
-        self.button_remove.setIcon(icon)
         self.button_remove.setToolTip("Remove current Root")
-
-        icon = frmb_gui.get_qapp().current_style.get_icon("folder-remove")
-        self.button_delete.setIcon(icon)
         self.button_delete.setToolTip("Delete current Root from disk")
 
         # 4. connect
