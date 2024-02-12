@@ -47,6 +47,9 @@ class MainControlBarWidget(QtWidgets.QFrame):
         # 4. connect
         self.selector_widget.root_changed_signal.connect(self._on_emit_root_changed)
 
+        # XXX: hacky but works fine
+        self.add_root = self.selector_widget.add_root
+
     def _on_emit_root_changed(self):
         root = self.selector_widget.current_root
         controller = frmb_gui.get_qapp().controller

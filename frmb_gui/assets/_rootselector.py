@@ -73,6 +73,23 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         """
         return self.main_combobox.currentData()
 
+    def add_root(self, root_path: Path) -> int:
+        """
+        Add the given root item to the combobox
+
+        Returns:
+            index at which the root was added, -1 if None.
+        """
+        root = frmb_gui.core.FrmbRoot(root_path)
+        if self.has_root(root):
+            # TODO display dialog ?
+            return -1
+
+        self.main_combobox.addItem(str(root.path), root)
+        index = self.main_combobox.findData(root)
+        self.main_combobox.setCurrentIndex(index)
+        return index
+
     def has_root(self, root: frmb_gui.core.FrmbRoot) -> bool:
         """
         Return True if the given root is already stored in the combobox as an option.
@@ -85,6 +102,8 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
                 return True
 
         return False
+
+    # private
 
     def _on_context_menu_combobox(self):
 
@@ -122,14 +141,8 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         if not dir_path:
             return
 
-        root = frmb_gui.core.FrmbRoot(Path(dir_path))
-        if self.has_root(root):
-            # TODO display dialog ?
-            return
-
-        self.main_combobox.addItem(str(root.path), root)
-        index = self.main_combobox.findData(root)
-        self.main_combobox.setCurrentIndex(index)
+        LOGGER.debug(f"[{self.__class__.__name__}][_on_add_root] adding {dir_path} ...")
+        self.add_root(Path(dir_path))
 
     def _on_remove_root(self):
         self.main_combobox.removeItem(self.main_combobox.currentIndex())
@@ -157,5 +170,5 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
             return
 
         self._on_remove_root()
-        LOGGER.info(f"deleting {root} ...")
+        LOGGER.info(f"[{self.__class__.__name__}][_on_delete_root] deleting {root} ...")
         frmb_gui.core.delete_root_from_disk(root)
