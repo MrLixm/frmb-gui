@@ -356,6 +356,14 @@ QFrame.InnerCentralWidget {
     margin-top: unset;
 }
 
+QFrame.TextOverlayWidget {
+    background-color: {{ layer.color.accent|withalpha(0.2) }};
+    alternate-background-color: black;
+    color: {{ text.color.primary }};
+    border-radius: {{ layer.border_radius.default }};
+    font-weight: bold;
+}
+
 /* control bar */
 {# XXX: we need to style the AppTitle like the left part of the widget
     and the MainControlBarWidget like the right part.
