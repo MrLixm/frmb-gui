@@ -20,10 +20,10 @@ class FrmbFileTreeWidgetItem(QtWidgets.QTreeWidgetItem):
 
     columns = {
         "name": {"index": 0, "label": "Name"},
-        "file_name": {"index": 1, "label": "File Name"},
-        "icon": {"index": 2, "label": "Icon"},
-        "paths": {"index": 3, "label": "Registry Paths"},
-        "command": {"index": 4, "label": "Command"},
+        "icon": {"index": 1, "label": "Icon"},
+        "paths": {"index": 2, "label": "Registry Paths"},
+        "command": {"index": 3, "label": "Command"},
+        "file_name": {"index": 4, "label": "File Name"},
     }
     """
     Configuration of every column in all the QTreeWidgetItems.
@@ -62,6 +62,11 @@ class FrmbFileTreeWidgetItem(QtWidgets.QTreeWidgetItem):
         icon = QtGui.QIcon(str(icon_path)) if icon_path and icon_path.exists() else None
         if icon is not None and icon.isNull():
             LOGGER.warning(f"Cannot load existing icon <{icon_path}> to QIcon")
+        if icon_path:
+            icon_path = str(icon_path.name)
+
+        registry_paths = len(self._frmb_file.content.paths)
+        command = "yes" if self._frmb_file.content.command else "no"
 
         self.setCheckState(
             0,
@@ -73,12 +78,14 @@ class FrmbFileTreeWidgetItem(QtWidgets.QTreeWidgetItem):
         )
         self.setText(self.get_index("name"), self._frmb_file.content.name)
         self.setText(self.get_index("file_name"), self._frmb_file.path.stem)
-        self.setText(self.get_index("icon"), str(icon_path if not icon else "" or ""))
+        self.setText(self.get_index("icon"), str(icon_path if not icon else ""))
         self.setIcon(self.get_index("icon"), icon or QtGui.QIcon())
-        self.setText(self.get_index("paths"), str(self._frmb_file.content.paths))
-        self.setText(
-            self.get_index("command"), " ".join(self._frmb_file.content.command)
-        )
+        self.setText(self.get_index("paths"), f"{registry_paths} paths")
+        self.setText(self.get_index("command"), command)
+
+        font = QtGui.QFont()
+        font.setWeight(font.Weight.Bold)
+        self.setFont(self.get_index("name"), font)
 
 
 class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
@@ -106,7 +113,7 @@ class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
 
         self.setColumnCount(len(FrmbFileTreeWidgetItem.columns))
 
-        header = self.header()
+        header = self.header()  # type: QtWidgets.QHeaderView
         model = self.model()  # type: QtCore.QAbstractItemModel
         header.setSectionResizeMode(header.ResizeMode.Interactive)
         header.setSortIndicator(0, QtCore.Qt.SortOrder.AscendingOrder)
@@ -152,7 +159,11 @@ class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
             return
 
         qpainter = QtGui.QPainter(self.viewport())
-        qpainter.drawText(self.rect(), QtCore.Qt.AlignmentFlag.AlignCenter, text)
+        qpainter.drawText(
+            self.viewport().rect(),
+            QtCore.Qt.AlignmentFlag.AlignCenter,
+            text,
+        )
         return
 
     def change_root(self, new_root: frmb_gui.core.FrmbRoot | None):
@@ -164,6 +175,8 @@ class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
         if not self._root:
             return
         self._populate(children=self._root.children, parent=self)
+        header = self.header()  # type: QtWidgets.QHeaderView
+        header.resizeSections(header.ResizeMode.ResizeToContents)
 
     def _populate(
         self,
