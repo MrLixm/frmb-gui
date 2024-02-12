@@ -1,3 +1,4 @@
+import html
 import logging
 import logging.config
 import sys
@@ -47,6 +48,25 @@ class MainWidget(QtWidgets.QWidget):
         self.scroll_area.setMaximumHeight(500)
 
         # 4. connect
+        self.button.clicked.connect(self._on_button_press)
+
+    def _on_button_press(self):
+        message = QtWidgets.QMessageBox(
+            QtWidgets.QMessageBox.Icon.Warning,
+            "Are you sure ?",
+            html.escape(
+                f"You are about to delete the current root <ewg> from your disk."
+            )
+            + f"<br>This action is not undoable."
+            + f"<br>Are you sure to continue ?",
+            QtWidgets.QMessageBox.StandardButton.Ok
+            | QtWidgets.QMessageBox.StandardButton.Cancel,
+        )
+        message.setDefaultButton(message.StandardButton.Cancel)
+        user_result = message.exec()
+        if user_result == QtWidgets.QMessageBox.StandardButton.Cancel:
+            return
+        print("FEaihwOI !")
 
 
 class MainWindow(QtWidgets.QMainWindow):

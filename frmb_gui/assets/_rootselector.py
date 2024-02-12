@@ -1,3 +1,4 @@
+import html
 import logging
 import webbrowser
 from pathlib import Path
@@ -138,18 +139,20 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         if not root:
             return
 
-        user_result = QtWidgets.QMessageBox.warning(
-            self,
+        # QtWidgets.QMessageBox.warning(...) cause styling issues, we instance manually.
+        message = QtWidgets.QMessageBox(
+            QtWidgets.QMessageBox.Icon.Warning,
             "Are you sure ?",
-            (
+            html.escape(
                 f"You are about to delete the current root <{root.path}> from your disk."
-                f"\nThis action is not undoable."
-                f"\nAre you sure to continue ?"
-            ),
+            )
+            + f"<br>This action is not undoable."
+            + f"<br>Are you sure to continue ?",
             QtWidgets.QMessageBox.StandardButton.Ok
             | QtWidgets.QMessageBox.StandardButton.Cancel,
-            QtWidgets.QMessageBox.StandardButton.Cancel,
         )
+        message.setDefaultButton(message.StandardButton.Cancel)
+        user_result = message.exec()
         if user_result == QtWidgets.QMessageBox.StandardButton.Cancel:
             return
 
