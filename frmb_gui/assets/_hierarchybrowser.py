@@ -59,29 +59,32 @@ class FrmbFileTreeWidgetItem(QtWidgets.QTreeWidgetItem):
         """
         LOGGER.debug(f"[{self.__class__.__name__}][update_content] updating {self}")
 
-        icon_path = self._frmb_file.content.icon
+        content = self._frmb_file.content(resolve_tokens=True)
+
+        icon_path = content.icon
         icon = QtGui.QIcon(str(icon_path)) if icon_path and icon_path.exists() else None
         if icon is not None and icon.isNull():
             LOGGER.warning(f"Cannot load existing icon <{icon_path}> to QIcon")
         if icon_path:
             icon_path = str(icon_path.name)
 
-        registry_paths = len(self._frmb_file.content.paths)
-        command = "yes" if self._frmb_file.content.command else "no"
+        registry_paths = len(content.paths)
+        command = "yes" if content.command else "no"
 
         self.setCheckState(
             0,
             (
                 QtCore.Qt.CheckState.Checked
-                if self._frmb_file.content.enabled
+                if content.enabled
                 else QtCore.Qt.CheckState.Unchecked
             ),
         )
-        self.setText(self.get_index("name"), self._frmb_file.content.name)
+        self.setText(self.get_index("name"), content.name)
         self.setText(self.get_index("file_name"), self._frmb_file.path.stem)
         self.setText(self.get_index("icon"), str(icon_path if not icon else ""))
         self.setIcon(self.get_index("icon"), icon or QtGui.QIcon())
-        self.setText(self.get_index("paths"), f"{registry_paths} paths")
+        if self._frmb_file.at_root():
+            self.setText(self.get_index("paths"), f"{registry_paths} paths")
         self.setText(self.get_index("command"), command)
 
         font = QtGui.QFont()
@@ -136,6 +139,8 @@ class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
                 column_name,
             )
 
+    # overrides
+
     def paintEvent(self, event: QtGui.QPaintEvent):
         """
         Paint a useful text when there is no root, or it has no children.
@@ -178,6 +183,8 @@ class HierarchyBrowserTreeWidget(QtWidgets.QTreeWidget):
         self._populate(children=self._root.children, parent=self)
         header = self.header()  # type: QtWidgets.QHeaderView
         header.resizeSections(header.ResizeMode.ResizeToContents)
+
+    # private
 
     def _populate(
         self,
