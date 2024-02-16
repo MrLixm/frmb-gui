@@ -63,12 +63,17 @@ QPushButton:pressed {
 
 /*ScrollArea (used in QTreeWidget)*/
 QAbstractScrollArea {
-    background-color: {{ layer.color.intermediate }};
+    background-color: transparent;
+    border: unset;
 }
 /*QTreeWidget*/
+QTreeWidget,
+QTreeWidget::branch {
+    background-color: transparent;
+    alternate-background-color: transparent;
+}
 QTreeWidget {
     alternate-background-color: {{ layer.color.intermediate }};
-    background-color: {{ layer.color.intermediate }};
     color: {{ text.color.primary }};
     border: none;
     padding: {{ spacing.normal }};
@@ -90,15 +95,34 @@ QTreeWidget::item {
     color: {{ text.color.primary }};
     padding: {{ spacing.small }};
 }
-QTreeWidget::item:selected {
+/*style when selected*/
+/*@formatter:off*/
+QTreeWidget::item:focus:!selected {
+/*@formatter:on*/
     background-color: {{ layer.color.intermediate_hi }};
 }
-QTreeWidget::item:focus {
-    border: 1px solid;
-    border-color: {{ layer.color.accent }};
-    border-top-left-radius: {{ layer.border_radius.default }};
-    border-top-right-radius: {{ layer.border_radius.default }};
+QTreeWidget::item:selected {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+{#background-color: {{ layer.color.intermediate_hi }};#}
 }
+QTreeWidget::item:selected:first {
+    border-left: 1px solid;
+    border-top-left-radius: {{ layer.border_radius.default }};
+    border-bottom-left-radius: {{ layer.border_radius.default }};
+}
+
+QTreeWidget::item:selected:last {
+    border-right: 1px solid;
+    border-top-right-radius: {{ layer.border_radius.default }};
+    border-bottom-right-radius: {{ layer.border_radius.default }};
+}
+QTreeWidget::item:selected,
+QTreeWidget::item:selected:last,
+QTreeWidget::item:selected:first {
+    border-color: {{ layer.color.accent }};
+}
+
 QTreeWidget::item::indicator {
     /*for some weird reason we have 2 checkbox superposed that are applied ?*/
     image: unset;
@@ -248,7 +272,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     background: none;
 }
 QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
-    background-color: {{ layer.color.intermediate_hi }};
+    background-color: {{ layer.color.intermediate }};
     border-radius: {{ layer.border_radius.default }};
 }
 QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
@@ -340,7 +364,6 @@ QWidget.SwitchButton::item:checked {
 QWidget.SwitchButton::item:disabled {
     background-color: {{ layer.color.background }};
 }
-
 
 
 /*************
@@ -439,7 +462,6 @@ QFrame.AppTitleWidget QWidget.StylesheetIcon {
     a widget and the HierarchyBrowserWidget like the bottom part.
 #}
 QDockWidget.FrmbHierarchyBrowserDock::title {
-    background-color: {{ layer.color.intermediate }};
     border: 1px solid;
     border-color: {{ layer.color.high }};
     border-bottom-width: 0;
@@ -449,12 +471,18 @@ QDockWidget.FrmbHierarchyBrowserDock::title {
     text-align: left;
 }
 QFrame.HierarchyBrowserWidget {
-    background-color: {{ layer.color.intermediate }};
     border: 1px solid;
     border-color: {{ layer.color.high }};
     border-top-width: 0;
     border-bottom-left-radius: {{ layer.border_radius.default }};
     border-bottom-right-radius: {{ layer.border_radius.default }};
+}
+QDockWidget.FrmbHierarchyBrowserDock::title,
+QFrame.HierarchyBrowserWidget,
+QFrame.HierarchyBrowserWidget QTreeWidget,
+QFrame.HierarchyBrowserWidget QTreeWidget QHeaderView::section,
+QFrame.HierarchyBrowserWidget QAbstractScrollArea {
+    background-color: {{ layer.color.background }};
 }
 
 /* dialogs */
