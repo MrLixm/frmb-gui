@@ -1,7 +1,9 @@
+import json
 from typing import Optional
 
 from qtpy import QtWidgets
 from qtpy import QtCore
+from qtpy import QtGui
 
 import frmb_gui
 
@@ -14,6 +16,8 @@ class DependencyViewerTreeWidget(QtWidgets.QTreeWidget):
 
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__(parent)
+
+        self._dependencies: dict[str, str] = {}
 
         self.setColumnCount(2)
         self.setAlternatingRowColors(False)
@@ -32,10 +36,14 @@ class DependencyViewerTreeWidget(QtWidgets.QTreeWidget):
         header = self.header()
         header.setSectionResizeMode(0, header.ResizeMode.ResizeToContents)
 
+        self.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
+        self.customContextMenuRequested.connect(self._on_context_menu)
+
         self.populate()
 
     def populate(self):
         self.clear()
+        self._dependencies = {}
         dependencies = frmb_gui.core.get_runtime_dependencies()
         for dependency in dependencies:
             self.add_dependency(dependency[0], dependency[1])
@@ -43,10 +51,24 @@ class DependencyViewerTreeWidget(QtWidgets.QTreeWidget):
         return
 
     def add_dependency(self, name: str, version: str) -> QtWidgets.QTreeWidgetItem:
+        self._dependencies[name] = version
         treeitem = QtWidgets.QTreeWidgetItem(self)
         treeitem.setText(0, name)
         treeitem.setText(1, version)
         return treeitem
+
+    def _on_context_menu(self, *args):
+        menu = QtWidgets.QMenu(self)
+        action = QtWidgets.QAction("Copy All to Clipboard as JSON.", menu)
+        action.triggered.connect(self._on_copy_all)
+        menu.addAction(action)
+        menu.exec_(QtGui.QCursor.pos())
+
+    def _on_copy_all(self, *args):
+        text = json.dumps(self._dependencies, indent=4)
+        clipboard = QtWidgets.QApplication.clipboard()
+        clipboard.clear()
+        clipboard.setText(text)
 
 
 class ContextWidget(QtWidgets.QFrame):
