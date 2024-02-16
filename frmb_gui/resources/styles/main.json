@@ -7,9 +7,9 @@
       "low": "rgb(30,30,30)",
       "low_hi": "rgb(35,35,35)",
       "intermediate_lo": "rgb(36,36,36)",
-      "intermediate": "rgb(40,40,40)",
-      "intermediate_hi": "rgb(45,45,45)",
-      "high": "rgb(50,50,50)",
+      "intermediate": "rgb(44,44,44)",
+      "intermediate_hi": "rgb(55,55,55)",
+      "high": "rgb(52,52,52)",
       "high_hi": "rgb(60,60,60)"
     },
     "border_radius": {
