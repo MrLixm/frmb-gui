@@ -9,6 +9,7 @@ from qtpy import QtGui
 from qtpy import QtWidgets
 
 import frmb_gui
+import frmb_gui.assets
 import frmb_gui._utils
 
 
@@ -21,7 +22,10 @@ class MainWidget(QtWidgets.QWidget):
         self.button = QtWidgets.QPushButton("place holder")
         self.label = QtWidgets.QLabel("PlaceHolder Label")
         self.combobox = QtWidgets.QComboBox()
+        self.checkbox_area = QtWidgets.QCheckBox("show area")
         self.scroll_area = QtWidgets.QScrollArea()
+        self.switch = frmb_gui.assets.SwitchButton()
+        self.switch_disabled = frmb_gui.assets.SwitchButton()
         image_label = QtWidgets.QLabel()
         image = QtGui.QIcon(str(frmb_gui.resources.get_icon_path("logo-dark-bg.svg")))
         image_label.setPixmap(image.pixmap(1024))
@@ -31,7 +35,10 @@ class MainWidget(QtWidgets.QWidget):
         self.layout_main.addWidget(self.button)
         self.layout_main.addWidget(self.label)
         self.layout_main.addWidget(self.combobox)
+        self.layout_main.addWidget(self.checkbox_area)
         self.layout_main.addWidget(self.scroll_area)
+        self.layout_main.addWidget(self.switch)
+        self.layout_main.addWidget(self.switch_disabled)
 
         # 3. modify
         self.layout_main.setContentsMargins(*([25] * 4))
@@ -43,12 +50,20 @@ class MainWidget(QtWidgets.QWidget):
                 r"Z:\packages-dev\frmb-gui\frmb_gui\_window.py",
             ]
         )
+        self.switch_disabled.setDisabled(True)
+        self.checkbox_area.setChecked(True)
         self.scroll_area.setWidget(image_label)
         self.scroll_area.setMaximumWidth(500)
         self.scroll_area.setMaximumHeight(500)
 
         # 4. connect
         self.button.clicked.connect(self._on_button_press)
+        self.checkbox_area.clicked.connect(self._on_toggle_area)
+        self.switch.clicked.connect(self._on_switch_changed)
+
+    def _on_toggle_area(self):
+        self.scroll_area.setVisible(not self.scroll_area.isVisible())
+        print(f"switch: {self.switch.isChecked()}")
 
     def _on_button_press(self):
         message = QtWidgets.QMessageBox(
@@ -67,6 +82,9 @@ class MainWidget(QtWidgets.QWidget):
         if user_result == QtWidgets.QMessageBox.StandardButton.Cancel:
             return
         print("FEaihwOI !")
+
+    def _on_switch_changed(self):
+        print(f"switch: {self.switch.isChecked()}")
 
 
 class MainWindow(QtWidgets.QMainWindow):
