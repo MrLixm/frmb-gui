@@ -411,7 +411,8 @@ QWidget.SwitchButton::item:disabled {
 /* StylesheetIcon */
 QWidget.StylesheetIcon, QWidget.StylesheetIconButton {
     image-position: center;
-    width: 16px;
+    max-width: {{ size.icon_default }};
+    max-height: {{ size.icon_default }};
     background-color: transparent;
     padding: 2px;
     border-radius: {{ layer.border_radius.default }};
@@ -440,6 +441,10 @@ QWidget.StylesheetIconButton[icon-name="root-remove"] {
 QWidget.StylesheetIcon[icon-name="root-delete"],
 QWidget.StylesheetIconButton[icon-name="root-delete"] {
     image: url("{{ icon.folder_remove }}");
+}
+QWidget.StylesheetIcon[icon-name="refresh"],
+QWidget.StylesheetIconButton[icon-name="refresh"] {
+    image: url("{{ icon.refresh }}");
 }
 
 /* main window padding */
@@ -493,6 +498,8 @@ QFrame.AppTitleWidget QLabel {
 }
 QFrame.AppTitleWidget QWidget.StylesheetIcon {
     min-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
 }
 
 /* hierarchy browser*/
@@ -509,6 +516,7 @@ QDockWidget.FrmbHierarchyBrowserDock::title {
     text-align: left;
 }
 QFrame.HierarchyBrowserWidget {
+    padding: {{ spacing.normal }};
     border: 1px solid;
     border-color: {{ layer.color.high }};
     border-top-width: 0;
@@ -521,6 +529,9 @@ QFrame.HierarchyBrowserWidget QTreeWidget,
 QFrame.HierarchyBrowserWidget QTreeWidget QHeaderView::section,
 QFrame.HierarchyBrowserWidget QAbstractScrollArea {
     background-color: {{ layer.color.background }};
+}
+QFrame.HierarchyBrowserWidget QTreeWidget {
+    padding: unset;
 }
 
 /* dialogs */

@@ -9,6 +9,7 @@ from qtpy import QtWidgets
 import frmb
 
 import frmb_gui.core
+from ._icon import StylesheetIconButton
 
 LOGGER = logging.getLogger(__name__)
 
@@ -194,18 +195,29 @@ class HierarchyBrowserWidget(QtWidgets.QFrame):
 
         # 1. create
         self.layout_main = QtWidgets.QVBoxLayout()
+        self.toolbar = QtWidgets.QToolBar()
+        self.button_update = StylesheetIconButton("refresh")
         self.treewidget = HierarchyBrowserTreeWidget()
 
         # 2. build layout
         self.setLayout(self.layout_main)
+        self.toolbar.addWidget(self.button_update)
+        self.layout_main.addWidget(self.toolbar)
         self.layout_main.addWidget(self.treewidget)
 
         # 3. modify
+        self.toolbar.setContentsMargins(0, 0, 0, 0)
         self.layout_main.setContentsMargins(0, 0, 0, 0)
+        self.layout_main.setSpacing(0)
+        self.button_update.setToolTip("Refresh tree widget content.")
 
         # 4. connect
         controller = frmb_gui.get_qapp().controller
         controller.root_changed_signal.connect(self._on_root_changed)
+        self.button_update.clicked.connect(self._on_refresh)
 
     def _on_root_changed(self, new_root: frmb_gui.core.FrmbRoot | None):
         self.treewidget.change_root(new_root)
+
+    def _on_refresh(self, *args):
+        self.treewidget.populate()

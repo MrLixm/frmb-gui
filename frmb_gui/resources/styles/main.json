@@ -44,6 +44,9 @@
     "huge": "30px",
     "paragraph": "7px"
   },
+  "size": {
+    "icon_default": "16px"
+  },
   "icon": {
     "app_favicon": "logo-dark-bg.svg",
     "header_logo": "logo-dark-no-bg.svg",
@@ -56,7 +59,8 @@
     "right_arrow": "right-arrow-dark.svg",
     "box_checked": "box-checked-dark.svg",
     "box_unchecked": "box-unchecked-dark.svg",
-    "box_indeterminate": "box-indeterminate-dark.svg"
+    "box_indeterminate": "box-indeterminate-dark.svg",
+    "refresh": "refresh-dark.svg"
   },
   "widget": {
     "treewidget": {
