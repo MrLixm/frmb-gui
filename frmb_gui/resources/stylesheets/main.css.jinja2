@@ -47,9 +47,15 @@ QMessageBox QLabel {
 
 /*QPushButton*/
 QPushButton {
-    background-color: transparent;
+    /*@formatter:off*/
+    background-color: qlineargradient(
+        x1:0, y1:1, x2:1, y2:0,
+        stop:0.3 {{ layer.color.intermediate }}, stop:1 {{ layer.color.intermediate_lo|withalpha(0) }}
+    );
+    /*@formatter:on*/
     color: {{ text.color.primary }};
-    border: 1px solid;
+    font-weight: bold;
+    border: 2px solid;
     border-color: {{ layer.color.high }};
     border-radius: {{ layer.border_radius.small }};
     padding: {{ spacing.normal }}
@@ -95,15 +101,33 @@ QTreeWidget {
 }
 QTreeWidget QHeaderView {
     margin-right: {{ spacing.large }};
+    border-bottom: 1px solid;
+    border-color: {{ layer.color.high }};
 }
 QTreeWidget QHeaderView::section {
     background: transparent;
     color: {{ text.color.secondary }};
     border: unset;
-    border-bottom: 1px solid;
+    border-right: 1px solid;
     border-color: {{ layer.color.high }};
-    padding: {{ spacing.small }};
+    padding-left: {{ spacing.small }};
+    margin-top: {{ spacing.small }};
     margin-bottom: {{ spacing.small }};
+}
+
+QTreeWidget QHeaderView::down-arrow,
+QTreeWidget QHeaderView::up-arrow {
+    height: 16px;
+    width: 16px;
+    margin-right: {{ spacing.small }};
+    subcontrol-origin: margin;
+    subcontrol-position: center right;
+}
+QTreeWidget QHeaderView::down-arrow {
+    image: url("{{ icon.down_arrow }}");
+}
+QTreeWidget QHeaderView::up-arrow {
+    image: url("{{ icon.up_arrow }}");
 }
 QTreeWidget::item {
     color: {{ text.color.primary }};
