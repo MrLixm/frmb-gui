@@ -97,7 +97,7 @@ QTreeWidget QHeaderView {
     margin-right: {{ spacing.large }};
 }
 QTreeWidget QHeaderView::section {
-    background: {{ layer.color.intermediate }};
+    background: transparent;
     color: {{ text.color.secondary }};
     border: unset;
     border-bottom: 1px solid;
@@ -512,6 +512,8 @@ QFrame.ContextWidget QLabel {
     border-radius: {{ layer.border_radius.default }};
 }
 QTreeWidget.DependencyViewerTreeWidget {
+    background-color: {{ layer.color.intermediate }};
     border: 1px solid;
     border-color: {{ layer.color.high }};
+    border-radius: {{ layer.border_radius.default }};
 }
