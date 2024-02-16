@@ -61,6 +61,20 @@ QPushButton:pressed {
     background-color: {{ layer.color.low }};
 }
 
+/*QCheckBox*/
+QCheckBox {
+    color: {{ text.color.primary }};
+}
+QCheckBox::indicator:checked {
+    image: url("{{ icon.box_checked }}");
+}
+QCheckBox::indicator:unchecked {
+    image: url("{{ icon.box_unchecked }}");
+}
+QCheckBox::indicator:indeterminate {
+    image: url("{{ icon.box_indeterminate }}");
+}
+
 /*ScrollArea (used in QTreeWidget)*/
 QAbstractScrollArea {
     background-color: transparent;
