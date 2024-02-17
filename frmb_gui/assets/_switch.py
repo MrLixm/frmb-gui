@@ -214,6 +214,12 @@ class SwitchLabelWidget(QtWidgets.QFrame):
         self.set_label(label)
         self.set_help_message(help_message)
 
+    def is_checked(self) -> bool:
+        """
+        True if the switch is "on" or "checked".
+        """
+        return self.switch.isChecked()
+
     def set_label(self, text: str):
         """
         Set the text displayed in the label next to the switch.
