@@ -7,3 +7,4 @@ from ._headerwidget import MainControlBarWidget
 from ._headerwidget import AppTitleWidget
 from ._hierarchybrowser import HierarchyBrowserWidget
 from ._overlay import TextOverlayWidget
+from ._delete import MenuDeleterDialog

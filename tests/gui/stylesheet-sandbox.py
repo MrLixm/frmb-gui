@@ -1,9 +1,13 @@
 import html
 import logging
 import logging.config
+import shutil
 import sys
+import tempfile
+from pathlib import Path
 from typing import Optional
 
+import frmb
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
@@ -30,6 +34,7 @@ class MainWidget(QtWidgets.QWidget):
         self.switch_label = frmb_gui.assets.SwitchLabelWidget(
             "descriptive text", "this is some help text"
         )
+        self.button_menudeleter = QtWidgets.QPushButton("Open MenuDeleter")
         image_label = QtWidgets.QLabel()
         image = QtGui.QIcon(str(frmb_gui.resources.get_icon_path("logo-dark-bg.svg")))
         image_label.setPixmap(image.pixmap(1024))
@@ -45,6 +50,7 @@ class MainWidget(QtWidgets.QWidget):
         self.layout_main.addWidget(self.switch)
         self.layout_main.addWidget(self.switch_disabled)
         self.layout_main.addWidget(self.switch_label)
+        self.layout_main.addWidget(self.button_menudeleter)
 
         # 3. modify
         self.layout_main.setContentsMargins(*([25] * 4))
@@ -67,6 +73,7 @@ class MainWidget(QtWidgets.QWidget):
         self.button.clicked.connect(self._on_button_press)
         self.checkbox_area.clicked.connect(self._on_toggle_area)
         self.switch.clicked.connect(self._on_switch_changed)
+        self.button_menudeleter.clicked.connect(self._on_open_menudeleter)
 
     def _on_toggle_area(self):
         self.scroll_area.setVisible(not self.scroll_area.isVisible())
@@ -100,6 +107,23 @@ class MainWidget(QtWidgets.QWidget):
             if widget is self.checkbox_disable:
                 continue
             widget.setDisabled(disabled)
+
+    def _on_open_menudeleter(self):
+
+        data_dir = Path(frmb_gui.__path__[0]).parent / "tests" / "data" / "structure1"
+        tmp_dir = Path(tempfile.mkdtemp(frmb_gui.__name__)) / "structure1"
+        shutil.copytree(data_dir, tmp_dir)
+
+        file = frmb.FrmbFile(tmp_dir / "ffmpeg-videos.frmb", root_dir=tmp_dir)
+
+        widget = frmb_gui.assets.MenuDeleterDialog(
+            menu_files=[file],
+            dry_run=True,
+            parent=self,
+        )
+        widget.exec()
+
+        shutil.rmtree(tmp_dir)
 
 
 class MainWindow(QtWidgets.QMainWindow):

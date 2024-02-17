@@ -220,6 +220,34 @@ QTreeView::branch:closed:has-children {
     image: url("{{ icon.right_arrow }}");
 }
 
+/*QListWidget*/
+QListWidget {
+    color: {{ text.color.primary }};
+    padding: {{ spacing.normal }};
+    background-color: {{ layer.color.intermediate }};
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-radius: {{ layer.border_radius.default }};
+    outline: unset;
+}
+QListWidget::item {
+    border: 1px solid transparent;
+    padding: 1px;
+}
+QListWidget::item:selected {
+    border: 1px solid;
+    color: {{ text.color.primary }};
+    border-color: {{ layer.color.accent }};
+    border-radius: {{ layer.border_radius.default }};
+}
+/*@formatter:off*/
+QListWidget::item:focus:!selected {
+/*@formatter:on*/
+    border: 1.5px dotted;
+    border-color: {{ layer.color.accent }};
+    border-radius: unset;
+}
+
 /*QDockWidget*/
 QDockWidget {
     color: {{ text.color.secondary }};
@@ -449,7 +477,9 @@ QWidget.SwitchButton::item:checked {
 QWidget.SwitchButton::item:disabled {
     background-color: {{ layer.color.background }};
 }
-
+QWidget.SwitchLabelWidget QLabel {
+    margin: unset;
+}
 
 /*************
   CUSTOM WIDGETS
@@ -501,6 +531,12 @@ QWidget.StylesheetIconButton[icon-name="refresh"] {
 QWidget.StylesheetIcon[icon-name="help"],
 QWidget.StylesheetIconButton[icon-name="help"] {
     image: url("{{ icon.help }}");
+}
+QWidget.StylesheetIcon[icon-name="delete"],
+QWidget.StylesheetIconButton[icon-name="delete"],
+QWidget.StylesheetIcon[icon-name="trashbin"],
+QWidget.StylesheetIconButton[icon-name="trashbin"] {
+    image: url("{{ icon.delete }}");
 }
 
 /* main window padding */
@@ -607,4 +643,25 @@ QTreeWidget.DependencyViewerTreeWidget {
     border: 1px solid;
     border-color: {{ layer.color.high }};
     border-radius: {{ layer.border_radius.default }};
+}
+
+QFrame.MenuDeleterWidget {
+    margin: {{ spacing.large }};
+    padding: {{ spacing.large }};
+    border: 1px solid;
+    border-color: {{ layer.color.danger }};
+    border-radius: {{ layer.border_radius.default }};
+    background-color: {{ layer.color.background }};
+}
+
+QFrame.MenuDeleterWidget QWidget.StylesheetIcon[icon-name="trashbin"] {
+    min-width: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    max-height: 32px;
+}
+QFrame.MenuDeleterWidget QListWidget {
+    background-color: {{ layer.color.intermediate }};
+    color: {{ text.color.secondary }};
+    font-family: {{ text.family.monospace }};
 }

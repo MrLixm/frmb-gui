@@ -11,7 +11,8 @@
       "intermediate_hi": "rgb(55,55,55)",
       "high": "rgb(52,52,52)",
       "high_hi": "rgb(60,60,60)",
-      "highest": "rgb(100,100,100)"
+      "highest": "rgb(100,100,100)",
+      "danger": "rgb(177,68,68)"
     },
     "border_radius": {
       "small": "3px",
@@ -61,7 +62,8 @@
     "box_checked": "box-checked-nobg-light.svg",
     "box_indeterminate": "box-indeterminate-nobg-light.svg",
     "refresh": "refresh-dark.svg",
-    "help": "help-dark.svg"
+    "help": "help-dark.svg",
+    "delete": "delete-dark.svg"
   },
   "widget": {
     "treewidget": {
