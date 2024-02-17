@@ -10,6 +10,9 @@ QWidget, QObject {
 QLabel {
     color: {{ text.color.primary }};
 }
+QLabel:disabled {
+    color: {{ text.color.tertiary }};
+}
 
 QToolTip {
     background-color: {{ layer.color.low }};
@@ -60,6 +63,10 @@ QPushButton {
     border-radius: {{ layer.border_radius.small }};
     padding: {{ spacing.normal }}
 }
+QPushButton:disabled {
+    color: {{ text.color.tertiary }};
+    background-color: transparent;
+}
 QPushButton:hover {
     background-color: {{ layer.color.intermediate_hi }};
 }
@@ -89,6 +96,10 @@ QTreeWidget::indicator:unchecked {
     border: 1px solid;
     border-color: {{ layer.color.highest }};
 }
+QCheckBox::indicator:unchecked:disabled,
+QTreeWidget::indicator:unchecked:disabled {
+    border-color: {{ layer.color.high }};
+}
 QCheckBox::indicator:unchecked:hover,
 QTreeWidget::indicator:unchecked:hover {
     background-color: {{ layer.color.intermediate_hi }};
@@ -97,6 +108,16 @@ QCheckBox::indicator:indeterminate,
 QTreeWidget::indicator:indeterminate {
     image: url("{{ icon.box_indeterminate }}");
     background-color: {{ layer.color.accent }};
+}
+QCheckBox:disabled {
+    color: {{ text.color.tertiary }};
+}
+QCheckBox::indicator:checked:disabled,
+QTreeWidget::indicator:checked:disabled,
+QCheckBox::indicator:indeterminate,
+QTreeWidget::indicator:indeterminate {
+    background-color: {{ layer.color.intermediate }};
+    border-color: {{ layer.color.high }};
 }
 
 /*ScrollArea (used in QTreeWidget)*/
@@ -237,6 +258,9 @@ QMenu {
     border-color: {{ layer.color.high }};
     padding: {{ spacing.small }};
 }
+QMenu:disabled {
+    color: {{ text.color.tertiary }};
+}
 QMenu::item {
     padding: {{ spacing.small }};
     padding-left: {{ spacing.normal }};
@@ -262,6 +286,10 @@ QComboBox {
     border-radius: {{ layer.border_radius.default }};
     padding: {{ spacing.smaller }};
     padding-left: {{ spacing.large }};
+}
+QComboBox:disabled {
+    color: {{ text.color.tertiary }};
+    background-color: transparent;
 }
 QComboBox:on {
     border-bottom-left-radius: unset;
@@ -319,9 +347,16 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
     /*remove "dotted" pattern*/
     background: none;
 }
-QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+QScrollBar::handle:vertical,
+QScrollBar::handle:horizontal {
     background-color: {{ layer.color.intermediate }};
     border-radius: {{ layer.border_radius.default }};
+}
+QScrollBar::handle:vertical:disabled,
+QScrollBar::handle:horizontal:disabled {
+    background-color: transparent;
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
 }
 QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
     background-color: {{ layer.color.high }};
@@ -396,7 +431,9 @@ QWidget.SwitchButton {
 QWidget.SwitchButton:disabled {
     background-color: {{ layer.color.low }};
 }
-QWidget.SwitchButton:checked {
+/*@formatter:off*/
+QWidget.SwitchButton:checked:!disabled {
+/*@formatter:on*/
     background-color: {{ layer.color.accent }};
 }
 QWidget.SwitchButton::item {
