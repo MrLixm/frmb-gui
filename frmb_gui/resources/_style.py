@@ -87,29 +87,30 @@ class UiStyle:
         Register the given font family stored on disk to be accesible in the Qt application.
 
         Args:
-            family_name: name of the famliy as named on disk
+            family_name: name of the directory containing all the styles of a family.
 
         Returns:
             ids of the font loaded
         """
         LOGGER.debug(f"loading font family {family_name} ...")
 
+        # this might be the name of a system builtin font
+        if QtGui.QFontDatabase.hasFamily(family_name):
+            return []
+
         if family_name in self._FONT_FAMILIES_LOADED:
-            LOGGER.warning(f"font family {family_name} already loaded")
+            LOGGER.debug(f"font family {family_name} already loaded")
             return []
 
         family_path = frmb_gui.resources.get_font_family_path(family_name)
         font_ids = []
 
-        # TODO font family may be builtin so need to look for it before raising
         if not family_path.exists():
             raise FileNotFoundError(
                 f"Given family name <{family_name}> was not found on disk."
             )
 
-        for file_name in os.scandir(family_path):
-            file_path = family_path / file_name
-
+        for file_path in family_path.glob("*"):
             if file_path.suffix not in [".ttf", ".otf"]:
                 continue
 
@@ -124,9 +125,6 @@ class UiStyle:
         if font_ids:
             self._FONT_FAMILIES_LOADED.append(family_name)
 
-        LOGGER.debug(
-            f"loaded font family {[QtGui.QFontDatabase.applicationFontFamilies(fid) for fid in font_ids]}"
-        )
         return font_ids
 
     def load_font_families(self) -> dict[str, list[int]]:
@@ -136,7 +134,6 @@ class UiStyle:
         Returns:
             dict of {"font families name": "list of font ids"}
         """
-        # TODO doesn't work to refactor
         loaded: dict[str, list[int]] = {}
         for family_name in self.get_font_families():
             loaded[family_name] = self.load_font_family(family_name)

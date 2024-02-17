@@ -112,6 +112,15 @@ class FrmbApplication(QtWidgets.QApplication):
         Reapply the style after re-reading its content from disk.
         """
         self._style = frmb_gui.resources.UiStyle.from_path(path=self._style_path)
+        fonts = self._style.load_font_families()
+        fonts = list(
+            {
+                tuple(QtGui.QFontDatabase.applicationFontFamilies(font_index))
+                for font_indexes in fonts.values()
+                for font_index in font_indexes
+            }
+        )
+        LOGGER.debug(f"loaded font families: {fonts}")
         self.reload_stylesheet()
         self.reload_icon()
         for callback in self._style_callbacks:
