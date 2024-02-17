@@ -378,10 +378,10 @@ QScrollBar::right-arrow {
 {% set SwitchButtonHeight = 25 %}
 QWidget.SwitchButton {
     background-color: {{ layer.color.high }};
+    min-width: {{ SwitchButtonWidth }}px;
     max-width: {{ SwitchButtonWidth }}px;
     min-height: {{ SwitchButtonHeight }}px;
     border-radius: {{ SwitchButtonHeight/2.2 }}px;
-    margin-top: {{ spacing.small }};
 }
 QWidget.SwitchButton:disabled {
     background-color: {{ layer.color.low }};
@@ -411,15 +411,20 @@ QWidget.SwitchButton::item:disabled {
 /* StylesheetIcon */
 QWidget.StylesheetIcon, QWidget.StylesheetIconButton {
     image-position: center;
+    min-width: {{ size.icon_default }};
+    min-height: {{ size.icon_default }};
     max-width: {{ size.icon_default }};
     max-height: {{ size.icon_default }};
     background-color: transparent;
     padding: 2px;
     border-radius: {{ layer.border_radius.default }};
+}
+QWidget.StylesheetIconButton {
     /*we use the border as a trick to scale down/up the icon on hover*/
     border: 2px solid transparent;
 }
-QWidget.StylesheetIconButton:hover {
+QWidget.StylesheetIconButton:hover,
+QWidget.StylesheetIcon[icon-name="help"]:hover {
     border: unset;
     background-color: {{ layer.color.intermediate_hi }};
 }
@@ -445,6 +450,10 @@ QWidget.StylesheetIconButton[icon-name="root-delete"] {
 QWidget.StylesheetIcon[icon-name="refresh"],
 QWidget.StylesheetIconButton[icon-name="refresh"] {
     image: url("{{ icon.refresh }}");
+}
+QWidget.StylesheetIcon[icon-name="help"],
+QWidget.StylesheetIconButton[icon-name="help"] {
+    image: url("{{ icon.help }}");
 }
 
 /* main window padding */

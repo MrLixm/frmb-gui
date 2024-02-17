@@ -26,6 +26,9 @@ class MainWidget(QtWidgets.QWidget):
         self.scroll_area = QtWidgets.QScrollArea()
         self.switch = frmb_gui.assets.SwitchButton()
         self.switch_disabled = frmb_gui.assets.SwitchButton()
+        self.switch_label = frmb_gui.assets.SwitchLabelWidget(
+            "descriptive text", "this is some help text"
+        )
         image_label = QtWidgets.QLabel()
         image = QtGui.QIcon(str(frmb_gui.resources.get_icon_path("logo-dark-bg.svg")))
         image_label.setPixmap(image.pixmap(1024))
@@ -39,6 +42,7 @@ class MainWidget(QtWidgets.QWidget):
         self.layout_main.addWidget(self.scroll_area)
         self.layout_main.addWidget(self.switch)
         self.layout_main.addWidget(self.switch_disabled)
+        self.layout_main.addWidget(self.switch_label)
 
         # 3. modify
         self.layout_main.setContentsMargins(*([25] * 4))

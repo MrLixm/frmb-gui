@@ -8,6 +8,8 @@ from qtpy.QtWidgets import QStyle
 
 LOGGER = logging.getLogger(__name__)
 
+from frmb_gui.assets import StylesheetIcon
+
 
 class SwitchButton(QtWidgets.QAbstractButton):
     """
@@ -64,8 +66,6 @@ class SwitchButton(QtWidgets.QAbstractButton):
         self.animation.setEasingCurve(QtCore.QEasingCurve.Type.InOutExpo)
 
         self.setCheckable(True)
-        self.setMinimumHeight(10)
-
         self.clicked.connect(self._on_press)
 
     @QtCore.Property(float)
@@ -153,6 +153,9 @@ class SwitchButton(QtWidgets.QAbstractButton):
         super().mouseReleaseEvent(event)
         self._mouse_pressed = False
 
+    def sizeHint(self) -> QtCore.QSize:
+        return QtCore.QSize(45, 20)
+
     def _on_press(self, *args):
         self.animation.setDirection(
             self.animation.Direction.Forward
@@ -160,3 +163,71 @@ class SwitchButton(QtWidgets.QAbstractButton):
             else self.animation.Direction.Backward
         )
         self.animation.start()
+
+
+class SwitchLabelWidget(QtWidgets.QFrame):
+    """
+    A switch button with a side label and an option help icon.
+
+    Args:
+        label: text displayed in the label next to the switch.
+        help_message:
+            the message displayed on the tooltip of the help icon.
+            If None, the icon is hidden.
+        parent: usual QWidget this instance is child of.
+    """
+
+    def __init__(
+        self,
+        label: str = "",
+        help_message: str | None = None,
+        parent: Optional[QtWidgets.QWidget] = None,
+    ):
+        super().__init__(parent=parent)
+
+        # 1. create
+        self.layout_main = QtWidgets.QHBoxLayout()
+        self.label = QtWidgets.QLabel()
+        self.icon_help = StylesheetIcon("help")
+        self.switch = SwitchButton()
+
+        # 2. build layout
+        self.setLayout(self.layout_main)
+        self.layout_main.addWidget(self.icon_help)
+        self.layout_main.addWidget(self.label)
+        self.layout_main.addWidget(self.switch)
+        self.layout_main.addStretch(1)
+
+        # 3. modify
+        self.layout_main.setContentsMargins(0, 0, 0, 0)
+        self.layout_main.setAlignment(
+            self.icon_help, QtCore.Qt.AlignmentFlag.AlignBaseline
+        )
+        self.layout_main.setAlignment(self.label, QtCore.Qt.AlignmentFlag.AlignBaseline)
+        self.layout_main.setAlignment(
+            self.switch, QtCore.Qt.AlignmentFlag.AlignBaseline
+        )
+
+        # 4. connect
+        self.clicked = self.switch.clicked
+
+        self.set_label(label)
+        self.set_help_message(help_message)
+
+    def set_label(self, text: str):
+        """
+        Set the text displayed in the label next to the switch.
+        """
+        self.label.setText(text)
+
+    def set_help_message(self, message: str | None):
+        """
+        Set the message displayed on the tooltip of the help icon.
+        """
+        if not message:
+            self.icon_help.setToolTip("")
+            self.icon_help.setVisible(False)
+            return
+
+        self.icon_help.setToolTip(message)
+        self.icon_help.setVisible(True)
