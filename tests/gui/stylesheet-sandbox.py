@@ -19,6 +19,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # 1. create
         self.layout_main = QtWidgets.QVBoxLayout()
+        self.checkbox_disable = QtWidgets.QCheckBox("Disable ALL")
         self.button = QtWidgets.QPushButton("place holder")
         self.label = QtWidgets.QLabel("PlaceHolder Label")
         self.combobox = QtWidgets.QComboBox()
@@ -35,6 +36,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # 2. build layout
         self.setLayout(self.layout_main)
+        self.layout_main.addWidget(self.checkbox_disable)
         self.layout_main.addWidget(self.button)
         self.layout_main.addWidget(self.label)
         self.layout_main.addWidget(self.combobox)
@@ -61,6 +63,7 @@ class MainWidget(QtWidgets.QWidget):
         self.scroll_area.setMaximumHeight(500)
 
         # 4. connect
+        self.checkbox_disable.stateChanged.connect(self._on_disable_all)
         self.button.clicked.connect(self._on_button_press)
         self.checkbox_area.clicked.connect(self._on_toggle_area)
         self.switch.clicked.connect(self._on_switch_changed)
@@ -89,6 +92,14 @@ class MainWidget(QtWidgets.QWidget):
 
     def _on_switch_changed(self):
         print(f"switch: {self.switch.isChecked()}")
+
+    def _on_disable_all(self, disabled):
+        for item_index in range(self.layout_main.count()):
+            item = self.layout_main.itemAt(item_index)
+            widget = item.widget() or item.layout()
+            if widget is self.checkbox_disable:
+                continue
+            widget.setDisabled(disabled)
 
 
 class MainWindow(QtWidgets.QMainWindow):
