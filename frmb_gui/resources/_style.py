@@ -125,6 +125,17 @@ class UiStyle:
         if font_ids:
             self._FONT_FAMILIES_LOADED.append(family_name)
 
+        loaded_font_names: set[str] = {
+            _family_name
+            for _font_id in font_ids
+            for _family_name in QtGui.QFontDatabase.applicationFontFamilies(_font_id)
+        }
+        # XXX: without this trick fonts looks aliased
+        for loaded_font_name in loaded_font_names:
+            font = QtGui.QFont(loaded_font_name)
+            font.setHintingPreference(font.HintingPreference.PreferNoHinting)
+            QtWidgets.QApplication.setFont(font)
+
         return font_ids
 
     def load_font_families(self) -> dict[str, list[int]]:
