@@ -1,6 +1,7 @@
 QWidget, QObject {
-    font-family: {{ text.family.default }};
+    font-family: {{ text.family.default }}, {{ text.family.default_fallback }};
     font-size: {{ text.size.default }};
+    font-weight: {{ text.weight.default }};
 }
 
 /*************

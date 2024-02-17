@@ -27,7 +27,8 @@
     },
     "family": {
       "default": "Segoe UI",
-      "monospace": "Courier"
+      "default_fallback": "Noto Sans",
+      "monospace": "Geist Mono"
     },
     "size": {
       "small": "8pt",
@@ -35,6 +36,7 @@
       "h1": "28pt"
     },
     "weight": {
+      "default": "400",
       "h1": "200"
     }
   },
