@@ -66,7 +66,7 @@ class SwitchButton(QtWidgets.QAbstractButton):
         self.animation.setEasingCurve(QtCore.QEasingCurve.Type.InOutExpo)
 
         self.setCheckable(True)
-        self.clicked.connect(self._on_press)
+        self.toggled.connect(self._on_press)
 
     @QtCore.Property(float)
     def position(self) -> float:
@@ -213,6 +213,12 @@ class SwitchLabelWidget(QtWidgets.QFrame):
 
         self.set_label(label)
         self.set_help_message(help_message)
+
+    def set_checked(self, checked: bool):
+        """
+        Change the switch state where "checked=True" imply the switch is "on".
+        """
+        self.switch.setChecked(checked)
 
     def is_checked(self) -> bool:
         """
