@@ -71,14 +71,32 @@ QPushButton:pressed {
 QCheckBox {
     color: {{ text.color.primary }};
 }
-QCheckBox::indicator:checked {
+QCheckBox::indicator,
+QTreeWidget::indicator {
+    width: {{ size.icon_default }};
+    height: {{ size.icon_default }};
+    border: 1px solid transparent;
+    border-radius: {{ layer.border_radius.default }};
+}
+QCheckBox::indicator:checked,
+QTreeWidget::indicator:checked {
     image: url("{{ icon.box_checked }}");
+    background-color: {{ layer.color.accent }};
 }
-QCheckBox::indicator:unchecked {
-    image: url("{{ icon.box_unchecked }}");
+QCheckBox::indicator:unchecked,
+QTreeWidget::indicator:unchecked {
+    image: unset;
+    border: 1px solid;
+    border-color: {{ layer.color.highest }};
 }
-QCheckBox::indicator:indeterminate {
+QCheckBox::indicator:unchecked:hover,
+QTreeWidget::indicator:unchecked:hover {
+    background-color: {{ layer.color.intermediate_hi }};
+}
+QCheckBox::indicator:indeterminate,
+QTreeWidget::indicator:indeterminate {
     image: url("{{ icon.box_indeterminate }}");
+    background-color: {{ layer.color.accent }};
 }
 
 /*ScrollArea (used in QTreeWidget)*/
@@ -165,18 +183,10 @@ QTreeWidget::item::indicator {
     /*for some weird reason we have 2 checkbox superposed that are applied ?*/
     image: unset;
 }
+/*XXX: note that the QTreeWidget indicator is styled upper along the QCheckBox*/
 QTreeWidget::indicator {
-    height: 16px;
     width: 16px;
-}
-QTreeWidget::indicator:checked {
-    image: url("{{ icon.box_checked }}");
-}
-QTreeWidget::indicator:unchecked {
-    image: url("{{ icon.box_unchecked }}");
-}
-QTreeWidget::indicator:indeterminate {
-    image: url("{{ icon.box_indeterminate }}");
+    height: 16px;
 }
 QTreeWidget::branch {
     border: unset;
