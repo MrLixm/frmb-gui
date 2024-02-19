@@ -655,15 +655,9 @@ QFrame.BaseDialogFrame {
     background-color: {{ layer.color.background }};
 }
 
-QFrame.MenuDeleterWidget {
-    margin: {{ spacing.large }};
-    padding: {{ spacing.large }};
-    border: 1px solid;
+QDialog.MenuDeleterDialog QFrame.BaseDialogFrame {
     border-color: {{ layer.color.danger }};
-    border-radius: {{ layer.border_radius.default }};
-    background-color: {{ layer.color.background }};
 }
-
 
 QFrame.MenuDeleterWidget QWidget.StylesheetIcon[icon-name="trashbin"] {
     min-width: 32px;

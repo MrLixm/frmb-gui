@@ -11,6 +11,7 @@ import frmb
 import frmb_gui.core
 from frmb_gui.assets import StylesheetIcon
 from frmb_gui.assets import SwitchLabelWidget
+from frmb_gui.assets import BaseDialog
 
 LOGGER = logging.getLogger(__name__)
 
@@ -41,7 +42,7 @@ class DeletedFileListWidget(QtWidgets.QListWidget):
             webbrowser.open(path)
 
 
-class MenuDeleterWidget(QtWidgets.QFrame):
+class MenuDeleterWidget(QtWidgets.QWidget):
     def __init__(
         self,
         menu_files: list[frmb.FrmbFile],
@@ -54,7 +55,6 @@ class MenuDeleterWidget(QtWidgets.QFrame):
         # 1. create
         self.layout_main = QtWidgets.QVBoxLayout()
         self.layout_options = QtWidgets.QHBoxLayout()
-        self.layout_buttons = QtWidgets.QHBoxLayout()
         self.icon_trash = StylesheetIcon("trashbin")
         self.text_header = QtWidgets.QLabel("")
         self.list_files = DeletedFileListWidget()
@@ -69,8 +69,6 @@ class MenuDeleterWidget(QtWidgets.QFrame):
         self.text_footer = QtWidgets.QLabel(
             "This action cannot be undone.<br>Do you wish to continue ?"
         )
-        self.button_delete = QtWidgets.QPushButton("Delete")
-        self.button_cancel = QtWidgets.QPushButton("Cancel")
 
         # 2. build layout
         self.setLayout(self.layout_main)
@@ -80,17 +78,13 @@ class MenuDeleterWidget(QtWidgets.QFrame):
         self.layout_main.addWidget(self.list_files)
         self.layout_main.addLayout(self.layout_options)
         self.layout_main.addWidget(self.text_footer)
-        self.layout_main.addLayout(self.layout_buttons)
         self.layout_options.addStretch(1)
         self.layout_options.addWidget(self.switch_children)
         self.layout_options.addWidget(self.switch_directory)
         self.layout_options.addStretch(1)
-        self.layout_buttons.addWidget(self.button_delete)
-        self.layout_buttons.addWidget(self.button_cancel)
 
         # 3. modify
         self.layout_main.setContentsMargins(0, 0, 0, 0)
-        self.layout_buttons.setContentsMargins(0, 0, 0, 0)
         self.layout_options.setContentsMargins(10, 10, 10, 10)
         self.layout_options.setSpacing(25)
 
@@ -106,8 +100,6 @@ class MenuDeleterWidget(QtWidgets.QFrame):
         self.switch_directory.setEnabled(self.switch_children.is_checked())
 
         # 4. connect
-        self.canceled = self.button_cancel.clicked
-        self.accepted = self.button_delete.clicked
         self.switch_children.clicked.connect(self._on_switch_children)
         self.switch_directory.clicked.connect(self._on_switch_directory)
         self.populate()
@@ -174,7 +166,7 @@ class MenuDeleterWidget(QtWidgets.QFrame):
         self.populate()
 
 
-class MenuDeleterDialog(QtWidgets.QDialog):
+class MenuDeleterDialog(BaseDialog):
     """
     A dialog for the user to delete multiple menu from disk.
     """
@@ -185,33 +177,13 @@ class MenuDeleterDialog(QtWidgets.QDialog):
         dry_run: bool = False,
         parent: Optional[QtWidgets.QWidget] = None,
     ):
-        super().__init__(parent)
-
         self._dry_run: bool = dry_run
         self._dry_run_msg: str = "(dryrun)" if self._dry_run else ""
 
-        # 1. Create
-        self.layout_main = QtWidgets.QVBoxLayout()
+        super().__init__(title=f"Delete menu {self._dry_run_msg}", parent=parent)
+
         self.widget = MenuDeleterWidget(menu_files=menu_files)
-
-        # 2. build layout
-        self.setLayout(self.layout_main)
-        self.layout_main.addWidget(self.widget)
-        self.layout_main.setContentsMargins(0, 0, 0, 0)
-
-        # 3. modify
-        self.setWindowTitle(
-            f"{frmb_gui.constants.name} - Delete Menu {self._dry_run_msg}"
-        )
-        effect = QtWidgets.QGraphicsDropShadowEffect(self)
-        effect.setColor(QtGui.QColor(0, 0, 0, 100))
-        effect.setOffset(0, 0)
-        effect.setBlurRadius(20)
-        self.widget.setGraphicsEffect(effect)
-
-        # 4. connect
-        self.widget.canceled.connect(self.close)
-        self.widget.accepted.connect(self._on_accepted)
+        self.set_main_widget(action_button_label="Delete", widget=self.widget)
 
     def _on_accepted(self):
         deleted = self.widget.delete_all_menus(dry_run=self._dry_run)
