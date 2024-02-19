@@ -131,7 +131,6 @@ class RootFileCreatorDialog(BaseDialog):
 
     def _on_accepted(self):
         self._created = self.widget_main.create_root_file()
-        self.close()
 
     def exec(self) -> frmb_gui.core.FrmbRootFile | None:
         super().exec()

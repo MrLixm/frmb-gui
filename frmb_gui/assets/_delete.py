@@ -191,4 +191,3 @@ class MenuDeleterDialog(BaseDialog):
             f"[{self.__class__.__name__}]{self._dry_run_msg} "
             f"deleted {len(deleted)} files: {deleted}"
         )
-        self.close()

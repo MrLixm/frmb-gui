@@ -126,12 +126,11 @@ class BaseDialog(QtWidgets.QDialog):
             main_widget=widget,
         )
         self._layout_main.addWidget(self.__widget)
-        self.__widget.accepted.connect(self.accepted.emit)
-        self.__widget.canceled.connect(self.rejected.emit)
+        self.__widget.accepted.connect(self.accept)
+        self.__widget.canceled.connect(self.reject)
 
-    @abc.abstractmethod
     def _on_accepted(self):
         pass
 
     def _on_rejected(self):
-        self.close()
+        pass
