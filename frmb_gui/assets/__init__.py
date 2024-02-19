@@ -9,3 +9,4 @@ from ._headerwidget import AppTitleWidget
 from ._hierarchybrowser import HierarchyBrowserWidget
 from ._overlay import TextOverlayWidget
 from ._delete import MenuDeleterDialog
+from ._rootcreate import RootFileCreatorDialog

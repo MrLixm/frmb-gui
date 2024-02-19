@@ -38,6 +38,7 @@ class MainWidget(QtWidgets.QWidget):
         image_label = QtWidgets.QLabel()
         image = QtGui.QIcon(str(frmb_gui.resources.get_icon_path("logo-dark-bg.svg")))
         image_label.setPixmap(image.pixmap(1024))
+        self.button_rootcreate = QtWidgets.QPushButton("Open RootFileCreator")
 
         # 2. build layout
         self.setLayout(self.layout_main)
@@ -51,6 +52,7 @@ class MainWidget(QtWidgets.QWidget):
         self.layout_main.addWidget(self.switch_disabled)
         self.layout_main.addWidget(self.switch_label)
         self.layout_main.addWidget(self.button_menudeleter)
+        self.layout_main.addWidget(self.button_rootcreate)
 
         # 3. modify
         self.layout_main.setContentsMargins(*([25] * 4))
@@ -74,6 +76,7 @@ class MainWidget(QtWidgets.QWidget):
         self.checkbox_area.clicked.connect(self._on_toggle_area)
         self.switch.clicked.connect(self._on_switch_changed)
         self.button_menudeleter.clicked.connect(self._on_open_menudeleter)
+        self.button_rootcreate.clicked.connect(self._on_open_rootcreator)
 
     def _on_toggle_area(self):
         self.scroll_area.setVisible(not self.scroll_area.isVisible())
@@ -122,6 +125,19 @@ class MainWidget(QtWidgets.QWidget):
             parent=self,
         )
         widget.exec()
+
+        shutil.rmtree(tmp_dir)
+
+    def _on_open_rootcreator(self):
+
+        tmp_dir = Path(tempfile.mkdtemp(frmb_gui.__name__)) / "frmbroot"
+        tmp_dir.mkdir()
+
+        root = frmb_gui.core.FrmbRoot(path=tmp_dir)
+        dialog = frmb_gui.assets.RootFileCreatorDialog(root=root)
+        file = dialog.exec()
+        print(file)
+        print(root.root_file)
 
         shutil.rmtree(tmp_dir)
 

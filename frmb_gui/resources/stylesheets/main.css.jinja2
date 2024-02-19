@@ -484,6 +484,17 @@ QWidget.SwitchLabelWidget QLabel {
     margin: unset;
 }
 
+QLineEdit {
+    color: {{ text.color.primary }};
+    selection-background-color: {{ layer.color.accent_lo }};
+    background-color: {{ layer.color.low }};
+    padding: {{ spacing.smaller }};
+    padding-top: 3px;
+    border: 1px solid;
+    border-color: {{ layer.color.high }};
+    border-radius: {{ layer.border_radius.default }};
+}
+
 /*************
   CUSTOM WIDGETS
 */
@@ -516,7 +527,9 @@ QWidget.StylesheetIconButton[icon-name="main-logo"] {
     image: url("{{ icon.header_logo }}");
 }
 QWidget.StylesheetIcon[icon-name="root-add"],
-QWidget.StylesheetIconButton[icon-name="root-add"] {
+QWidget.StylesheetIconButton[icon-name="root-add"],
+QWidget.StylesheetIcon[icon-name="add"],
+QWidget.StylesheetIconButton[icon-name="add"] {
     image: url("{{ icon.plus }}");
 }
 QWidget.StylesheetIcon[icon-name="root-remove"],
@@ -661,10 +674,10 @@ QFrame.BaseDialogFrame > QPushButton {
     margin-bottom: unset;
 }
 
+/*MenuDeleterWidget*/
 QDialog.MenuDeleterDialog QFrame.BaseDialogFrame {
     border-color: {{ layer.color.danger }};
 }
-
 QWidget.MenuDeleterWidget QWidget.StylesheetIcon[icon-name="trashbin"] {
     min-width: 32px;
     min-height: 32px;
@@ -675,4 +688,17 @@ QWidget.MenuDeleterWidget QListWidget {
     background-color: {{ layer.color.intermediate }};
     color: {{ text.color.secondary }};
     font-family: {{ text.family.monospace }};
+}
+
+/*RootFileCreatorWidget*/
+QFrame.RootFileCreatorWidget QLabel {
+    margin: unset;
+    align: top;
+}
+QFrame.RootFileCreatorWidget QLabel#path-label {
+    font-family: {{ text.family.monospace }};
+    color: {{ text.color.secondary }}
+}
+QFrame.RootFileCreatorWidget QFrame.LabeledLineEdit {
+    margin: {{ spacing.small }};
 }
