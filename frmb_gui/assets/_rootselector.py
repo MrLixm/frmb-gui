@@ -1,4 +1,3 @@
-import html
 import logging
 import webbrowser
 from pathlib import Path
@@ -9,9 +8,54 @@ from qtpy import QtGui
 from qtpy import QtWidgets
 
 import frmb_gui
-from ._icon import StylesheetIconButton
+from frmb_gui.assets import BaseDialog
+from frmb_gui.assets import StylesheetIconButton
+from frmb_gui.assets import StylesheetIcon
 
 LOGGER = logging.getLogger(__name__)
+
+
+class DeleteWarningDialog(BaseDialog):
+    """
+    A dialog to warn the user he is performing a destructive deletion operation.
+
+    He has the option to cancel or continue the operation.
+    """
+
+    def __init__(self, root: frmb_gui.core.FrmbRoot):
+        super().__init__(title="Deleting Directory")
+
+        # 1. create
+        self.layout_main = QtWidgets.QVBoxLayout()
+        self.widget = QtWidgets.QWidget()
+        self.icon_warning = StylesheetIcon("warning")
+        self.label_header = QtWidgets.QLabel(
+            f"You are about to delete the following root directory from your disk:"
+        )
+        self.label_path = QtWidgets.QLabel(str(root.path))
+        self.label_footer = QtWidgets.QLabel(
+            f"This action is not undoable.<br>Are you sure to continue ?"
+        )
+
+        # 2. build layout
+        self.widget.setLayout(self.layout_main)
+        self.layout_main.addWidget(self.icon_warning)
+        self.layout_main.addWidget(self.label_header)
+        self.layout_main.addWidget(self.label_path)
+        self.layout_main.addWidget(self.label_footer)
+
+        # 3. modify
+        self.set_main_widget(action_button_label="Delete", widget=self.widget)
+        self.layout_main.setContentsMargins(0, 0, 0, 0)
+        self.layout_main.setAlignment(
+            self.icon_warning, QtCore.Qt.AlignmentFlag.AlignHCenter
+        )
+        self.label_path.setObjectName("path-label")
+        self.label_path.setTextInteractionFlags(
+            QtCore.Qt.TextInteractionFlag.TextSelectableByMouse
+        )
+
+        # 4. connect
 
 
 class MenuRootSelectorWidget(QtWidgets.QFrame):
@@ -152,21 +196,9 @@ class MenuRootSelectorWidget(QtWidgets.QFrame):
         if not root:
             return
 
-        # QtWidgets.QMessageBox.warning(...) cause styling issues, we instance manually.
-        message = QtWidgets.QMessageBox(
-            QtWidgets.QMessageBox.Icon.Warning,
-            "Are you sure ?",
-            html.escape(
-                f"You are about to delete the current root <{root.path}> from your disk."
-            )
-            + f"<br>This action is not undoable."
-            + f"<br>Are you sure to continue ?",
-            QtWidgets.QMessageBox.StandardButton.Ok
-            | QtWidgets.QMessageBox.StandardButton.Cancel,
-        )
-        message.setDefaultButton(message.StandardButton.Cancel)
-        user_result = message.exec()
-        if user_result == QtWidgets.QMessageBox.StandardButton.Cancel:
+        dialog = DeleteWarningDialog(root=root)
+        user_result = dialog.exec()
+        if user_result != dialog.DialogCode.Accepted:
             return
 
         self._on_remove_root()

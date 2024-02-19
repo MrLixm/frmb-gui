@@ -554,6 +554,10 @@ QWidget.StylesheetIcon[icon-name="trashbin"],
 QWidget.StylesheetIconButton[icon-name="trashbin"] {
     image: url("{{ icon.delete }}");
 }
+QWidget.StylesheetIcon[icon-name="warning"],
+QWidget.StylesheetIconButton[icon-name="warning"] {
+    image: url("{{ icon.warning }}");
+}
 
 /* main window padding */
 QFrame.InnerCentralWidget {
@@ -609,6 +613,25 @@ QFrame.AppTitleWidget QWidget.StylesheetIcon {
     min-height: 32px;
     max-height: 32px;
 }
+
+/*root selector*/
+QDialog.DeleteWarningDialog > QFrame {
+    border-color: {{ layer.color.warning }};
+}
+QDialog.DeleteWarningDialog QLabel {
+    qproperty-alignment: right;
+}
+QDialog.DeleteWarningDialog QWidget.StylesheetIcon {
+    min-width: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    max-height: 32px;
+}
+QDialog.DeleteWarningDialog QLabel#path-label {
+    font-family: {{ text.family.monospace }};
+    color: {{ text.color.secondary }}
+}
+
 
 /* hierarchy browser*/
 {# XXX: we need to style the FrmbHierarchyBrowserDock like the top part of

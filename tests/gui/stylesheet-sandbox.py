@@ -15,6 +15,7 @@ from qtpy import QtWidgets
 import frmb_gui
 import frmb_gui.assets
 import frmb_gui._utils
+from frmb_gui.assets._rootselector import DeleteWarningDialog
 
 
 class MainWidget(QtWidgets.QWidget):
@@ -24,7 +25,7 @@ class MainWidget(QtWidgets.QWidget):
         # 1. create
         self.layout_main = QtWidgets.QVBoxLayout()
         self.checkbox_disable = QtWidgets.QCheckBox("Disable ALL")
-        self.button = QtWidgets.QPushButton("place holder")
+        self.button = QtWidgets.QPushButton("Open Root Deleter")
         self.label = QtWidgets.QLabel("PlaceHolder Label")
         self.combobox = QtWidgets.QComboBox()
         self.checkbox_area = QtWidgets.QCheckBox("show area")
@@ -43,7 +44,6 @@ class MainWidget(QtWidgets.QWidget):
         # 2. build layout
         self.setLayout(self.layout_main)
         self.layout_main.addWidget(self.checkbox_disable)
-        self.layout_main.addWidget(self.button)
         self.layout_main.addWidget(self.label)
         self.layout_main.addWidget(self.combobox)
         self.layout_main.addWidget(self.checkbox_area)
@@ -51,6 +51,7 @@ class MainWidget(QtWidgets.QWidget):
         self.layout_main.addWidget(self.switch)
         self.layout_main.addWidget(self.switch_disabled)
         self.layout_main.addWidget(self.switch_label)
+        self.layout_main.addWidget(self.button)
         self.layout_main.addWidget(self.button_menudeleter)
         self.layout_main.addWidget(self.button_rootcreate)
 
@@ -83,22 +84,15 @@ class MainWidget(QtWidgets.QWidget):
         print(f"switch: {self.switch.isChecked()}")
 
     def _on_button_press(self):
-        message = QtWidgets.QMessageBox(
-            QtWidgets.QMessageBox.Icon.Warning,
-            "Are you sure ?",
-            html.escape(
-                f"You are about to delete the current root <ewg> from your disk."
-            )
-            + f"<br>This action is not undoable."
-            + f"<br>Are you sure to continue ?",
-            QtWidgets.QMessageBox.StandardButton.Ok
-            | QtWidgets.QMessageBox.StandardButton.Cancel,
-        )
-        message.setDefaultButton(message.StandardButton.Cancel)
-        user_result = message.exec()
-        if user_result == QtWidgets.QMessageBox.StandardButton.Cancel:
-            return
-        print("FEaihwOI !")
+        tmp_dir = Path(tempfile.mkdtemp(frmb_gui.__name__))
+        root = frmb_gui.core.FrmbRoot(path=tmp_dir)
+        dialog = DeleteWarningDialog(root=root)
+        result = dialog.exec()
+        if result != dialog.DialogCode.Accepted:
+            print("dialog canceled")
+        else:
+            print("dialog accepted")
+        shutil.rmtree(tmp_dir)
 
     def _on_switch_changed(self):
         print(f"switch: {self.switch.isChecked()}")
