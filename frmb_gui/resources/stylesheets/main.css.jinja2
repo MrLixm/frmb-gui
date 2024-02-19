@@ -52,9 +52,9 @@ QMessageBox QLabel {
 /*QPushButton*/
 QPushButton {
     /*@formatter:off*/
-    background-color: qlineargradient(
-        x1:0, y1:1, x2:1, y2:0,
-        stop:0.3 {{ layer.color.intermediate }}, stop:1 {{ layer.color.intermediate_lo|withalpha(0) }}
+    background-color: qradialgradient(
+        cx:0.5, cy:0.5, radius: 1, fx:0.5, fy:0.5,
+        stop:0 {{ layer.color.low|withalpha(0) }}, stop:1 {{ layer.color.low }}
     );
     /*@formatter:on*/
     color: {{ text.color.primary }};
