@@ -654,6 +654,10 @@ QFrame.BaseDialogFrame {
     border-radius: {{ layer.border_radius.default }};
     background-color: {{ layer.color.background }};
 }
+QFrame.BaseDialogFrame > QPushButton {
+    margin: {{ spacing.small }};
+    margin-bottom: unset;
+}
 
 QDialog.MenuDeleterDialog QFrame.BaseDialogFrame {
     border-color: {{ layer.color.danger }};

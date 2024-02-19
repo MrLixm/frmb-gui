@@ -32,23 +32,26 @@ class BaseDialogFrame(QtWidgets.QFrame):
         self.layout_buttons = QtWidgets.QHBoxLayout()
         self.button_action = QtWidgets.QPushButton(action_label)
         self.button_cancel = QtWidgets.QPushButton("Cancel")
-        effect = QtWidgets.QGraphicsDropShadowEffect(self)
-        effect.setColor(QtGui.QColor(0, 0, 0, self.drop_shadow_opacity))
-        effect.setOffset(0, 0)
-        effect.setBlurRadius(self.drop_shadow_radius)
+        for widget in [self, self.button_action, self.button_cancel]:
+            effect = QtWidgets.QGraphicsDropShadowEffect(widget)
+            effect.setColor(QtGui.QColor(0, 0, 0, self.drop_shadow_opacity))
+            effect.setOffset(0, 0)
+            effect.setBlurRadius(self.drop_shadow_radius)
+            widget.setGraphicsEffect(effect)
 
         # 2. build layout
         self.setLayout(self.layout_main)
         self.layout_main.addWidget(main_widget)
         self.layout_main.addStretch(1)
         self.layout_main.addLayout(self.layout_buttons)
+        self.layout_buttons.addStretch(1)
         self.layout_buttons.addWidget(self.button_action)
         self.layout_buttons.addWidget(self.button_cancel)
+        self.layout_buttons.addStretch(1)
 
         # 3. modify
         self.layout_main.setContentsMargins(0, 0, 0, 0)
         self.layout_main.setSpacing(0)
-        self.setGraphicsEffect(effect)
 
         # 4. connect
         self.accepted = self.button_action.clicked
