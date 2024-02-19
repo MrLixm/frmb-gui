@@ -646,6 +646,15 @@ QTreeWidget.DependencyViewerTreeWidget {
     border-radius: {{ layer.border_radius.default }};
 }
 
+QFrame.BaseDialogFrame {
+    margin: {{ spacing.large }};
+    padding: {{ spacing.large }};
+    border: 1px solid;
+    border-color: {{ layer.color.intermediate_hi }};
+    border-radius: {{ layer.border_radius.default }};
+    background-color: {{ layer.color.background }};
+}
+
 QFrame.MenuDeleterWidget {
     margin: {{ spacing.large }};
     padding: {{ spacing.large }};
@@ -654,6 +663,7 @@ QFrame.MenuDeleterWidget {
     border-radius: {{ layer.border_radius.default }};
     background-color: {{ layer.color.background }};
 }
+
 
 QFrame.MenuDeleterWidget QWidget.StylesheetIcon[icon-name="trashbin"] {
     min-width: 32px;
