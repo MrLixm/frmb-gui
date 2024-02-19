@@ -451,14 +451,16 @@ QScrollBar::right-arrow {
 {% set SwitchButtonWidth = 50 %}
 {% set SwitchButtonHeight = 25 %}
 QWidget.SwitchButton {
-    background-color: {{ layer.color.high }};
+    background-color: {{ layer.color.low }};
     min-width: {{ SwitchButtonWidth }}px;
     max-width: {{ SwitchButtonWidth }}px;
     min-height: {{ SwitchButtonHeight }}px;
     border-radius: {{ SwitchButtonHeight/2.2 }}px;
 }
 QWidget.SwitchButton:disabled {
-    background-color: {{ layer.color.low }};
+    background-color: transparent;
+    border: 1px solid;
+    border-color: {{ layer.color.intermediate_hi }};
 }
 /*@formatter:off*/
 QWidget.SwitchButton:checked:!disabled {
@@ -466,7 +468,7 @@ QWidget.SwitchButton:checked:!disabled {
     background-color: {{ layer.color.accent }};
 }
 QWidget.SwitchButton::item {
-    background-color: {{ layer.color.low }};
+    background-color: {{ layer.color.intermediate_hi }};
     border-radius: {{ (SwitchButtonHeight/2 + 6)//2 }}px;
     min-width: {{ SwitchButtonHeight/2 + 4 }}px;
     min-height: {{ SwitchButtonHeight/2 }}px;
@@ -476,7 +478,7 @@ QWidget.SwitchButton::item:checked {
     background-color: {{ layer.color.background }};
 }
 QWidget.SwitchButton::item:disabled {
-    background-color: {{ layer.color.background }};
+    background-color: {{ layer.color.intermediate_hi }};
 }
 QWidget.SwitchLabelWidget QLabel {
     margin: unset;
